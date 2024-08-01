@@ -148,22 +148,38 @@ class GestorContenido
         $stmt->execute();
         return $stmt->get_result();
     }
-    public function buscarNoticias($termino)
-    {
-        $termino = "%" . $termino . "%"; // Añadir comodines para la búsqueda parcial
-        $sql = "SELECT * FROM articulos WHERE titulo LIKE ? OR contenido LIKE ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ss", $termino, $termino);
-        $stmt->execute();
-        $result = $stmt->get_result();
+public function buscarNoticias($termino)
+{
+    $terminos = explode(' ', $termino); // Divide la consulta en palabras
+    $sql = "SELECT * FROM articulos WHERE ";
+    
+    $params = [];
+    $types = '';
 
-        $noticias = [];
-        while ($row = $result->fetch_assoc()) {
-            $noticias[] = $row;
+    foreach ($terminos as $index => $palabra) {
+        if ($index > 0) {
+            $sql .= " OR ";
         }
-
-        return $noticias;
+        $sql .= "(titulo LIKE ? OR contenido LIKE ?)";
+        $params[] = "%" . $palabra . "%";
+        $params[] = "%" . $palabra . "%";
+        $types .= 'ss';
     }
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param($types, ...$params);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $noticias = [];
+    while ($row = $result->fetch_assoc()) {
+        $noticias[] = $row;
+    }
+
+    return $noticias;
+}
+
+
     public function listarArticulosPorCategoria($categoria_id)
     {
         $sql = "SELECT * FROM articulos WHERE categoria_id = ?";
