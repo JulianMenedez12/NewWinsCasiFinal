@@ -43,32 +43,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
 
                 if (empty($status)) {
-                    // Actualizar el archivo de conexión
-                    $conexionFile = 'NewWins/model/conexion.php';
-                    $conexionContent = "<?php\n";
-                    $conexionContent .= "class ConexionBD {\n";
-                    $conexionContent .= "    public static function obtenerConexion() {\n";
-                    $conexionContent .= "        \$servername = '$host';\n";
-                    $conexionContent .= "        \$username = '$username';\n";
-                    $conexionContent .= "        \$password = '$password';\n";
-                    $conexionContent .= "        \$dbname = '$dbname';\n";
-                    $conexionContent .= "\n";
-                    $conexionContent .= "        \$conn = new mysqli(\$servername, \$username, \$password, \$dbname);\n";
-                    $conexionContent .= "\n";
-                    $conexionContent .= "        if (\$conn->connect_error) {\n";
-                    $conexionContent .= "            die(\"Conexión fallida: \" . \$conn->connect_error);\n";
-                    $conexionContent .= "        }\n";
-                    $conexionContent .= "\n";
-                    $conexionContent .= "        return \$conn;\n";
-                    $conexionContent .= "    }\n";
-                    $conexionContent .= "}\n";
-                    $conexionContent .= "?>";
-
-                    // Guardar el archivo de conexión
-                    if (file_put_contents($conexionFile, $conexionContent) === false) {
-                        $status = "Error al actualizar el archivo de conexión.";
+                    // Insertar usuario admin
+                    $adminPassword = password_hash('contraseña', PASSWORD_DEFAULT);
+                    $insertAdmin = "INSERT INTO usuarios_registrados (nombre_usuario, contrasena, correo_electronico, apellido, es_admin) 
+                                    VALUES ('admin', '$adminPassword', 'admin@gmail.com', 'Admin', 1)";
+                    
+                    if ($conn->query($insertAdmin) === FALSE) {
+                        $status = "Error al insertar el usuario admin: " . $conn->error;
                     } else {
-                        $status = "Base de datos configurada y archivo de conexión actualizado.";
+                        // Actualizar el archivo de conexión
+                        $conexionFile = 'NewWins/model/conexion.php';
+                        $conexionContent = "<?php\n";
+                        $conexionContent .= "class ConexionBD {\n";
+                        $conexionContent .= "    public static function obtenerConexion() {\n";
+                        $conexionContent .= "        \$servername = '$host';\n";
+                        $conexionContent .= "        \$username = '$username';\n";
+                        $conexionContent .= "        \$password = '$password';\n";
+                        $conexionContent .= "        \$dbname = '$dbname';\n";
+                        $conexionContent .= "\n";
+                        $conexionContent .= "        \$conn = new mysqli(\$servername, \$username, \$password, \$dbname);\n";
+                        $conexionContent .= "\n";
+                        $conexionContent .= "        if (\$conn->connect_error) {\n";
+                        $conexionContent .= "            die(\"Conexión fallida: \" . \$conn->connect_error);\n";
+                        $conexionContent .= "        }\n";
+                        $conexionContent .= "\n";
+                        $conexionContent .= "        return \$conn;\n";
+                        $conexionContent .= "    }\n";
+                        $conexionContent .= "}\n";
+                        $conexionContent .= "?>";
+
+                        // Guardar el archivo de conexión
+                        if (file_put_contents($conexionFile, $conexionContent) === false) {
+                            $status = "Error al actualizar el archivo de conexión.";
+                        } else {
+                            $status = "Base de datos configurada y archivo de conexión actualizado.";
+                        }
                     }
                 }
             }
@@ -79,23 +88,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Mostrar la alerta y redirigir
     echo "<!DOCTYPE html>
-<html lang='es'>
-<head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Instalador de Base de Datos</title>
-    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-</head>
-<body>
-    <script>
-        Swal.fire({
-            title: '" . (strpos($status, "Error") === false ? "Éxito" : "Error") . "',
-            text: '$status',
-            icon: '" . (strpos($status, "Error") === false ? "success" : "error") . "'
-        }).then(() => { window.location.href = 'NewWins/view/index.php'; });
-    </script>
-</body>
-</html>";
+    <html lang='es'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>Instalador de Base de Datos</title>
+        <link rel='stylesheet' href='https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css'>
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    </head>
+    <body>
+        <script>
+            Swal.fire({
+                title: '" . (strpos($status, "Error") === false ? "Éxito" : "Error") . "',
+                text: '$status',
+                icon: '" . (strpos($status, "Error") === false ? "success" : "error") . "'
+            }).then(() => { window.location.href = 'NewWins/view/index.php'; });
+        </script>
+    </body>
+    </html>";
     exit();
 }
 ?>
@@ -131,4 +141,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 </body>
-</html>
