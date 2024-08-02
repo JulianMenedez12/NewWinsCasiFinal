@@ -123,7 +123,7 @@ $fechaActual = date("d/m/Y"); // Formato de fecha: día/mes/año
                         <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
                     </form>
 
-                    <div class="col-md-1 text-md ms-3">
+                    <div class="col-md-1 text-md ms-3" style="margin-right: 10px;">
                         <?php echo $fechaActual; ?>
                     </div>
                     <div class="dropdown ms-3">

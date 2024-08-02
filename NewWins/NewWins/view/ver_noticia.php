@@ -59,10 +59,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-9">
                 <p><?php echo $noticia['contenido']; ?></p>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <p>Anuncios</p>
                 <!-- Código de anuncio de Google AdSense -->
                 <div class="anuncio">
@@ -129,52 +129,62 @@
                 }
             </script>
     </div>
-        <div class="row mt-4">
-            <div class="col-12">
-                <h3>Comentarios</h3>
-                <form action="../controller/enviar_comentario.php" method="POST">
-                    <div class="mb-3">
-                        <textarea class="form-control" name="texto" placeholder="Escribe tu comentario aquí..." required></textarea>
-                    </div>
-                    <input type="hidden" name="articulo_id" value="<?php echo $articulo_id; ?>">
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-                </form>
+    <div class="row mt-4">
+    <div class="col-12">
+        <h3>Comentarios</h3>
+        <form action="../controller/enviar_comentario.php" method="POST">
+            <div class="mb-3">
+                <textarea class="form-control" name="texto" placeholder="Escribe tu comentario aquí..." required></textarea>
             </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-12">
-                <h2>Comentarios</h2>
-                <?php if (!empty($comentarios)) : ?>
-                    <?php foreach ($comentarios as $comentario) : ?>
-                        <div class="mb-3">
-                            <strong><?php echo htmlspecialchars($comentario['usuario']); ?></strong>
-                            <span class="fecha-comentario" data-fecha="<?php echo htmlspecialchars($comentario['fecha_hora']); ?>"></span>
+            <input type="hidden" name="articulo_id" value="<?php echo $articulo_id; ?>">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-12">
+        <h2>
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseComentarios" aria-expanded="false" aria-controls="collapseComentarios" style="text-decoration: none;">
+                Comentarios
+            </button>
+        </h2>
+        <div class="collapse" id="collapseComentarios">
+            <?php if (!empty($comentarios)) : ?>
+                <?php foreach ($comentarios as $comentario) : ?>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <img src="ruta_del_avatar_del_usuario.jpg" alt="Avatar" class="rounded-circle me-2" width="40" height="40">
+                                <strong><?php echo htmlspecialchars($comentario['usuario']); ?></strong>
+                                <span class="fecha-comentario ms-2 text-muted" data-fecha="<?php echo htmlspecialchars($comentario['fecha_hora']); ?>"></span>
+                            </div>
                             <p><?php echo htmlspecialchars($comentario['texto']); ?></p>
                         </div>
-                    <?php endforeach; ?>
-                <?php else : ?>
-                    <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
-                <?php endif; ?>
-            </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
+            <?php endif; ?>
         </div>
     </div>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const fechas = document.querySelectorAll('.fecha-comentario');
-            fechas.forEach(fecha => {
-                const fechaOriginal = fecha.getAttribute('data-fecha');
-                const fechaRelativa = dayjs(fechaOriginal).fromNow();
-                fecha.textContent = fechaRelativa;
-            });
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fechas = document.querySelectorAll('.fecha-comentario');
+        fechas.forEach(fecha => {
+            const fechaOriginal = fecha.getAttribute('data-fecha');
+            const fechaRelativa = dayjs(fechaOriginal).fromNow();
+            fecha.textContent = fechaRelativa;
         });
-    </script>
+    });
+</script>
 
-    <?php
-    include('footer_user.php');
-    ?>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="../js/main.js"></script>
-    </body>
+<?php
+include('footer_user.php');
+?>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
 
-    </html>
+</html>
