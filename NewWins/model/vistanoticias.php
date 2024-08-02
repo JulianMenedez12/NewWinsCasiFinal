@@ -10,29 +10,30 @@ class VistaNoticias
         $this->gestorContenido = $gestorContenido;
     }
 
-    // Mostrar todas las noticias
     public function mostrarNoticias()
     {
         $noticias = $this->gestorContenido->listarNoticias();
         foreach ($noticias as $noticia) {
-            $id = $noticia['id']; // Ajusta el índice según tu base de datos
+            $id = $noticia['id'];
             $titulo = $noticia['titulo'];
-            $fecha_not = $noticia['fecha_publicacion'];
-            $imagen = $noticia['url']; // Ajusta el índice según tu base de datos
-
+            $fecha_not = $noticia['fecha_publicacion']; // Verifica que esta fecha sea correcta
+            $imagen = $noticia['url'];
+    
             echo '<div class="col-md-4 mb-4">';
-            echo '  <a href="ver_noticia.php?id=' . $id . '" style=text-decoration:none>';
+            echo '  <a href="ver_noticia.php?id=' . $id . '" style="text-decoration:none">';
             echo '      <div class="card">';
             echo '          <img src="' . $imagen . '" class="card-img-top" alt="' . $titulo . '">';
             echo '          <div class="card-body">';
             echo '              <h5 class="card-title">' . $titulo . '</h5>';
-            echo '              <p class="card-text">' . $fecha_not . '</p>';
+            echo '              <p class="card-text"><span class="fecha-noticia" data-fecha="' . $fecha_not . '"></span></p>';
             echo '          </div>';
             echo '      </div>';
             echo '  </a>';
             echo '</div>';
         }
     }
+    
+
 
     // Mostrar una noticia específica por ID
     public function mostrarNoticiaPorId($id)

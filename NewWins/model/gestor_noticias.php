@@ -1,4 +1,5 @@
 <?php
+require_once('config.php');
 require_once('conexion.php');
 //archivo:../model/gestor_noticias.php
 class GestorContenido
@@ -11,23 +12,26 @@ class GestorContenido
     }
 
     public function subirNoticia($titulo, $contenido, $url, $categoria_id)
-    {
-        $fecha_publicacion = date("Y-m-d");
+{
+    // Crea un objeto DateTime con la zona horaria de Bogotá
+    $fecha = new DateTime('now', new DateTimeZone('America/Bogota'));
+    // Formatea la fecha y hora para que se ajuste a la base de datos
+    $fecha_publicacion = $fecha->format('Y-m-d H:i:s');
 
-        if (!empty($titulo) && !empty($contenido) && !empty($url) && !empty($categoria_id)) {
-            $sql = "INSERT INTO articulos (titulo, fecha_publicacion, contenido, url, categoria_id) VALUES (?, ?, ?, ?, ?)";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("ssssi", $titulo, $fecha_publicacion, $contenido, $url, $categoria_id);
+    if (!empty($titulo) && !empty($contenido) && !empty($url) && !empty($categoria_id)) {
+        $sql = "INSERT INTO articulos (titulo, fecha_publicacion, contenido, url, categoria_id) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ssssi", $titulo, $fecha_publicacion, $contenido, $url, $categoria_id);
 
-            if ($stmt->execute()) {
-                return true; // Devolver true si la inserción fue exitosa
-            } else {
-                return false; // Devolver false si hubo un error en la inserción
-            }
+        if ($stmt->execute()) {
+            return true; // Devolver true si la inserción fue exitosa
         } else {
-            return false; // Devolver false si faltan datos
+            return false; // Devolver false si hubo un error en la inserción
         }
+    } else {
+        return false; // Devolver false si faltan datos
     }
+}
 
     public function listarCategorias()
     {
@@ -107,13 +111,14 @@ class GestorContenido
         $sql = "UPDATE articulos SET titulo = ?, contenido = ?, url = ?, categoria_id = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("sssii", $titulo, $contenido, $url, $categoria_id, $id);
-
+    
         if ($stmt->execute()) {
             return true;
         } else {
             return false;
         }
     }
+    
     public function obtenerCategoriaPorId($id)
     {
         $sql = "SELECT * FROM categorias WHERE id = ?";
@@ -207,7 +212,7 @@ class GestorContenido
             throw new Exception("Error al agregar comentario: " . $stmt->error);
         }
         $stmt->close();
-    }   
+    }
     public function obtenerComentariosPorArticuloId($articulo_id)
     {
         $sql = "SELECT usuario, fecha_hora, texto, puntuacion FROM comentarios WHERE articulo_id = ? ORDER BY fecha_hora DESC";
