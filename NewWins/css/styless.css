@@ -162,3 +162,25 @@
     box-shadow: 0 0 0 0.2rem rgba(200, 35, 51, 0.5);
 }
 
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 300px; /* Ajusta esta altura según sea necesario */
+}
+
+.card-img-top {
+    height: 200px; /* Ajusta esta altura según sea necesario */
+    object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+}
+
+.fecha-noticia {
+    display: block;
+    margin-top: auto; /* Empuja la fecha hacia el final del contenedor */
+}
+
