@@ -47,6 +47,14 @@ $fechaActual = date("d/m/Y"); // Formato de fecha: día/mes/año
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8262837766739470"
      crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/relativeTime.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/locale/es.js"></script>
+    <script>
+        // Configura el plugin de tiempo relativo y el idioma español
+        dayjs.extend(window.dayjs_plugin_relativeTime);
+        dayjs.locale('es');
+    </script>
 </head>
 
 <body>
@@ -123,7 +131,7 @@ $fechaActual = date("d/m/Y"); // Formato de fecha: día/mes/año
                         <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
                     </form>
 
-                    <div class="col-md-1 text-md ms-3">
+                    <div class="col-md-1 text-md ms-3" style="margin-right: 10px;">
                         <?php echo $fechaActual; ?>
                     </div>
                     <div class="dropdown ms-3">
@@ -144,7 +152,6 @@ $fechaActual = date("d/m/Y"); // Formato de fecha: día/mes/año
     <!-- Scripts al final del body -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="../js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('cerrarSesionUser').addEventListener('click', function (e) {
