@@ -332,6 +332,22 @@ class GestorContenido
         $stmt->close();
         return $conteo;
     }
+    public function subirNoticiaBandeja($titulo, $contenido, $url, $categoria_id) {
+        $sql = "INSERT INTO articulos (titulo, contenido, url, categoria_id) VALUES (?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("sssi", $titulo, $contenido, $url, $categoria_id);
+    
+        return $stmt->execute();
+    }
+    
+    public function eliminarDeBandeja($id) {
+        $sql = "DELETE FROM bandeja_entrada WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+    
+        return $stmt->execute();
+    }
+    
 
 }
 
