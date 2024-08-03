@@ -12,7 +12,7 @@ class BandejaEntradaModel
 
     public function obtenerArticulos()
     {
-        $sql = "SELECT b.id, u.nombre_usuario, b.fecha_envio, b.imagenes, b.titulo, b.contenido
+        $sql = "SELECT b.id, u.nombre_usuario, b.fecha_envio, b.url, b.titulo, b.contenido
                 FROM bandeja_entrada b
                 JOIN usuarios_registrados u ON b.usuario_id = u.id";
         $result = $this->conn->query($sql);
@@ -29,3 +29,4 @@ class BandejaEntradaModel
         return $articulos;
     }
 }
+

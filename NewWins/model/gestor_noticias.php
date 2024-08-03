@@ -228,16 +228,21 @@ class GestorContenido
         $stmt->close();
         return $comentarios;
     }
-    public function enviarNoticia($usuario_id, $titulo, $contenido, $categoria_id) {
-        $sql = "INSERT INTO bandeja_entrada (usuario_id, titulo, contenido, categoria_id, fecha_envio) VALUES (?, ?, ?, ?, NOW())";
+    public function enviarNoticia($usuario_id, $titulo, $contenido, $categoria_id, $url) {
+        $sql = "INSERT INTO bandeja_entrada (usuario_id, titulo, contenido, categoria_id, url, fecha_envio) VALUES (?, ?, ?, ?, ?, NOW())";
         $stmt = $this->conn->prepare($sql);
-
+    
         if ($stmt === false) {
             return false;
         }
-
-        $stmt->bind_param("isss", $usuario_id, $titulo, $contenido, $categoria_id);
-        return $stmt->execute();
+    
+        $stmt->bind_param("issis", $usuario_id, $titulo, $contenido, $categoria_id, $url);
+    
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     public function publicarNoticia($id, $titulo, $contenido, $categoria_id) {
