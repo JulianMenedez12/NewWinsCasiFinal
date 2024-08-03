@@ -1,12 +1,27 @@
 <?php include 'header.php'; ?>
-
 <head>
     <title>Bandeja de mensajes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bootstrap-4/bootstrap-4.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/alert1.js"></script>
 </head>
-
 <body>
     <div class="container my-5">
         <h4 class="mb-4">Bandeja de Entrada</h4>
+
+        <?php
+        // Incluir el controlador para obtener los artículos
+        include '../controller/listar_bandeja.php';
+
+        // Mostrar alertas
+        if (isset($_GET['subida'])) {
+            if ($_GET['subida'] === 'exito') {
+                echo "<script>mostrarAlertaExito('Noticia subida con éxito');</script>";
+            } else if ($_GET['subida'] === 'error') {
+                echo "<script>mostrarAlertaError('Error al subir la noticia');</script>";
+            }
+        }
+        ?>
 
         <?php
         // Incluir el controlador para obtener los artículos
