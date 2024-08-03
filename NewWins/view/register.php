@@ -17,6 +17,7 @@
     <title>Registro de Usuario</title>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <script src="https://unpkg.com/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="../css/styless.css">
 </head>
 
 <body>
@@ -104,11 +105,15 @@
                                             <option value="USA">Estados Unidos</option>
                                         </select>
                                     </div>
+                                    <div class="mb-4 form-check">
+                                        <input type="checkbox" class="form-check-input" id="terminos" required>
+                                        <label class="form-check-label" for="terminos">Acepto los <a href="terminos_y_condiciones.php" target="_blank" >Términos y Condiciones</a></label>
+                                    </div>
                                     <div class="cf-turnstile" data-sitekey="0x4AAAAAAAgIXngXPyh0WPqy" data-theme='light'></div>
                                     <input type="hidden" name="cf-turnstile-response" id="cf-turnstile-response">
 
                                     <!-- Botón de registro -->
-                                    <button type="submit" class="btn btn-primary btn-block mb-4">Registrar</button>
+                                    <button type="submit" class="btn btn-danger btn-block mb-4">Registrar</button>
 
                                     <!-- Mensaje de redirección -->
                                     <div id="mensaje" class="text-secondary text-center"></div>
