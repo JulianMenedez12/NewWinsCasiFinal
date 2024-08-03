@@ -26,42 +26,47 @@
     <?php include 'header_user.php'; ?> <!-- Incluir el encabezado común -->
 
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-9">
-                <div id="noticias" class="mt-4">
-                    <h4>Enviar Noticia</h4>
-                    <div class="card">
-                        <div class="card-body">
-                            <!-- Formulario para enviar noticias -->
-                            <form action="../controller/enviar_noticia.php" method="post" enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <label for="titulo">Título:</label>
-                                    <input type="text" class="form-control" id="titulo" name="titulo" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="contenido">Contenido:</label>
-                                    <textarea class="form-control" id="contenido" name="contenido" rows="10"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="categoria_id">Categoría:</label>
-                                    <select class="form-control" id="categoria_id" name="categoria_id" required>
-                                        <?php
-                                        include '../controller/listar_categoria.php';
-                                        echo aa();
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class= "form-group">
-                                    <input type="hidden" name="articulo_id" value="<?php echo $articulo_id; ?>">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Enviar Noticia</button>
-                            </form>
-                        </div>
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+            <div id="noticias" class="mt-4">
+                <h4>Enviar Noticia</h4>
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Formulario para enviar noticias -->
+                        <form action="../controller/enviar_noticia.php" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="titulo">Título:</label>
+                                <input type="text" class="form-control" id="titulo" name="titulo" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contenido">Contenido:</label>
+                                <textarea class="form-control" id="contenido" name="contenido" rows="10"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">Imagen de portada (URL):</label>
+                                <input type="text" class="form-control" id="url" name="url" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="categoria_id">Categoría:</label>
+                                <select class="form-control" id="categoria_id" name="categoria_id" required>
+                                    <?php
+                                    include '../controller/listar_categoria.php';
+                                    echo aa();
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="articulo_id" value="<?php echo $articulo_id; ?>">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar Noticia</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    
 
     <!-- Incluir SweetAlert (Swal) desde CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

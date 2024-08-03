@@ -48,7 +48,7 @@ session_start();
 
                                 </div>
                                 <div class="form-group">
-                                    <label for="url">URL:</label>
+                                    <label for="url">Imagen de portada (URL):</label>
                                     <input type="text" class="form-control" id="url" name="url" required>
                                 </div>
                                 <div class="form-group">

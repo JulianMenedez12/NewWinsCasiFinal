@@ -31,8 +31,8 @@
                             <td><?= htmlspecialchars($articulo["nombre_usuario"]) ?></td>
                             <td><?= date("Y-m-d H:i:s", strtotime($articulo["fecha_envio"])) ?></td>
                             <td>
-                                <?php if (!empty($articulo["imagenes"])) : ?>
-                                    <img src="data:image/jpeg;base64,<?= base64_encode($articulo["imagenes"]) ?>" alt="Imagen" width="100">
+                                <?php if (!empty($articulo["url"])) : ?>
+                                    <img src="<?= htmlspecialchars($articulo["url"]) ?>" alt="Imagen" width="100">
                                 <?php else : ?>
                                     No hay imagen
                                 <?php endif; ?>
@@ -57,6 +57,4 @@
         </table>
     </div>
 </body>
-</body>
-
 </html>
