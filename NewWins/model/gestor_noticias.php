@@ -332,13 +332,38 @@ class GestorContenido
         $stmt->close();
         return $conteo;
     }
-    public function subirNoticiaBandeja($titulo, $contenido, $url, $categoria_id) {
-        $sql = "INSERT INTO articulos (titulo, contenido, url, categoria_id) VALUES (?, ?, ?, ?)";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("sssi", $titulo, $contenido, $url, $categoria_id);
+    public function subirNoticiaBandeja($id, $titulo, $contenido, $url, $categoria_id) {
+        // Obtener los detalles del artículo desde la bandeja de entrada
+        $sql_select = "SELECT usuario_id, titulo, contenido, url, categoria_id FROM bandeja_entrada WHERE id = ?";
+        $stmt_select = $this->conn->prepare($sql_select);
+        $stmt_select->bind_param("i", $id);
+        $stmt_select->execute();
+        $resultado = $stmt_select->get_result()->fetch_assoc();
+        $stmt_select->close();
     
-        return $stmt->execute();
+        if (!$resultado) {
+            return false;
+        }
+    
+        // Insertar en la tabla artículos
+        $sql_insert = "INSERT INTO articulos (titulo, fecha_publicacion, contenido, url, categoria_id) VALUES (?, NOW(), ?, ?, ?)";
+        $stmt_insert = $this->conn->prepare($sql_insert);
+        $stmt_insert->bind_param("sssi", $titulo, $contenido, $url, $categoria_id);
+        $exito = $stmt_insert->execute();
+        $stmt_insert->close();
+    
+        if ($exito) {
+            // Eliminar de la bandeja de entrada
+            $sql_delete = "DELETE FROM bandeja_entrada WHERE id = ?";
+            $stmt_delete = $this->conn->prepare($sql_delete);
+            $stmt_delete->bind_param("i", $id);
+            $stmt_delete->execute();
+            $stmt_delete->close();
+        }
+    
+        return $exito;
     }
+    
     
     public function eliminarDeBandeja($id) {
         $sql = "DELETE FROM bandeja_entrada WHERE id = ?";
