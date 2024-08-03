@@ -1,34 +1,21 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['correo']) || empty($_SESSION['correo'])) {
-    header("Location: index.php");
-    exit();
-}
-
+include 'header.php';
 require_once '../model/conexion.php';
-require_once '../model/gestor_noticias.php';
+require_once '../model/BandejaEntrada.php';
 
-$conexion = ConexionBD::obtenerConexion();
-$gestorContenido = new GestorContenido($conexion);
+$conn = ConexionBD::obtenerConexion();
+$model = new BandejaEntradaModel($conn);
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $noticia = $gestorContenido->obtenerNoticiaPorId($id);
-} else {
-    header("Location: bandeja_entrada.php");
-    exit();
-}
+$articulo = $model->obtenerArticuloPorId($_GET['id']);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Noticia</title>
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.tiny.cloud/1/fj76e7aualveq77f2n0uc7mcz6cdimvxob2lx0yl9o4rwkhp/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
@@ -44,61 +31,36 @@ if (isset($_GET['id'])) {
         });
     </script>
 </head>
-
 <body>
-    <?php include 'header.php'; ?> <!-- Incluir el encabezado común -->
-
-    <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <?php
-            require_once '../model/conexion.php';
-            require_once '../model/gestor_noticias.php';
-            $conexion = ConexionBD::obtenerConexion();
-            $gestor = new GestorContenido($conexion);
-            $result = $gestor->listarNoticias();
-            if (isset($_GET['id'])) {
-                $id = $_GET['id'];
-                $conexion = ConexionBD::obtenerConexion();
-                $stmt = $conexion->prepare("SELECT * FROM bandeja_entrada WHERE id = ?");
-                $stmt->bind_param("i", $id);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                $articulo = $result->fetch_assoc();
-            }
-            ?>
-            <div class="card mt-4">
-                <div class="card-header">Editar Noticia</div>
-                <div class="card-body">
-                    <form action="../controller/editar_noticia.php" method="POST">
-                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($articulo['id']); ?>">
-                        <div class="mb-3">
-                            <label for="titulo" class="form-label">Título</label>
-                            <input type="text" id="titulo" name="titulo" class="form-control" value="<?php echo htmlspecialchars($articulo['titulo']); ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="contenido" class="form-label">Contenido</label>
-                            <textarea class="form-control" id="contenido" name="contenido" rows="10"><?php echo htmlspecialchars($articulo['contenido']); ?></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="categoria_id" class="form-label">Categoría</label>
-                            <select id="categoria_id" name="categoria_id" class="form-control" required>
-                                <?php
-                                $categorias = $gestor->listarCategorias();
-                                while ($categoria = $categorias->fetch_assoc()) {
-                                    $selected = ($categoria['id'] == $articulo['categoria_id']) ? 'selected' : '';
-                                    echo "<option value='" . htmlspecialchars($categoria['id']) . "' $selected>" . htmlspecialchars($categoria['nombre']) . "</option>";
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                    </form>
+    <div class="container my-5">
+        <h4 class="mb-4">Editar Noticia de Bandeja</h4>
+        <div class="card">
+            <div class="card-body">
+                <form action="../controller/subir_noticia_bandeja.php" method="post">
+                    <input type="hidden" name="id" value="<?= $articulo['id'] ?>">
+                    <div class="form-group">
+                        <label for="titulo">Título:</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" value="<?= htmlspecialchars($articulo['titulo']) ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contenido">Contenido:</label>
+                        <textarea class="form-control" id="contenido" name="contenido" rows="10"><?= htmlspecialchars($articulo['contenido']) ?></textarea>
+                    </div>
+                <div class="form-group">
+                    <label for="url">Imagen de portada (URL):</label>
+                    <input type="text" class="form-control" id="url" name="url" value="<?= htmlspecialchars($articulo['url']) ?>" required>
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="categoria_id">Categoría:</label>
+                    <select class="form-control" id="categoria_id" name="categoria_id" required>
+                        <?php
+                        include '../controller/listar_categoria.php';
+                        echo aa($articulo['categoria_id']);
+                        ?>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Subir Noticia</button>
+            </form>
         </div>
     </div>
 </div>
-</body>
-
-</html>

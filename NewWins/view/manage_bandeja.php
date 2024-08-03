@@ -42,8 +42,11 @@
                             <td>
                                 <form action="../controller/procesar_noticia.php" method="post" style="display:inline;">
                                     <input type="hidden" name="id" value="<?= $articulo['id'] ?>">
-                                    <button type="submit" name="accion" value="aceptar" class="btn btn-success">Aceptar</button>
                                     <button type="submit" name="accion" value="denegar" class="btn btn-danger">Denegar</button>
+                                </form>
+                                <form action="../view/editar_noticia.php" method="get" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?= $articulo['id'] ?>">
+                                    <button type="submit" class="btn btn-warning">Editar y Subir</button>
                                 </form>
                             </td>
                         </tr>
