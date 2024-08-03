@@ -11,9 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario_id = GestorUsuarios::getUserIdByEmail($_SESSION['correo']);
     $titulo = $_POST['titulo'];
     $contenido = $_POST['contenido'];
+    $url = $_POST['url'];
     $categoria_id = $_POST['categoria_id'];
 
-    if ($gestorContenido->enviarNoticia($usuario_id, $titulo, $contenido, $categoria_id)) {
+    if ($gestorContenido->enviarNoticia($usuario_id, $titulo, $contenido, $categoria_id, $url)) {
         header("Location: ../view/enviar_news.php?noticia=exito");
     } else {
         header("Location: ../view/enviar_news.php?noticia=error");

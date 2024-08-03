@@ -16,5 +16,4 @@ $articulos = $model->obtenerArticulos();
 // Cerrar la conexión
 $conn->close();
 
-// Devolver los artículos
-return $articulos;
+// Los artículos ya están disponibles para la vista
