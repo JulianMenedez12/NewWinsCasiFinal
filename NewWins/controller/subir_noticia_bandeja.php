@@ -13,11 +13,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $url = $_POST['url'];
     $categoria_id = $_POST['categoria_id'];
 
-    if ($gestorContenido->subirNoticiaBandeja($titulo, $contenido, $url, $categoria_id)) {
-        $gestorContenido->eliminarDeBandeja($id); // Eliminar de la bandeja de entrada
-        header("Location: ../view/manage_bandeja.php?noticia=exito");
+    if ($gestorContenido->subirNoticiaBandeja($id, $titulo, $contenido, $url, $categoria_id)) {
+        header("Location: ../view/manage_bandeja.php?id=$id&estado=exito");
     } else {
-        header("Location: ../view/editar_noticia.php?id=$id&noticia=error");
+        header("Location: ../view/manage_bandeja.php?id=$id&estado=error");
     }
     exit();
 }
