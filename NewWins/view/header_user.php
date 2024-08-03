@@ -120,6 +120,9 @@ $fechaActual = date("d/m/Y"); // Formato de fecha: día/mes/año
                     <li class="nav-item">
                         <a class="nav-link" href="enviar_news.php">Envía tu noticia</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contactarnos_user.php">Contactar</a>
+                    </li>
                 </ul>
 
                 <div class="col-md-8 d-flex align-items-center">
