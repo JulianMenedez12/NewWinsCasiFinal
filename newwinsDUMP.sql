@@ -115,7 +115,7 @@ CREATE TABLE `bandeja_entrada` (
   `titulo` varchar(255) NOT NULL,
   `contenido` text NOT NULL,
   `categoria_id` int(11) NOT NULL,
-  `imagenes` blob DEFAULT NULL,
+  `url` varchar(2000) DEFAULT NULL,
   `fecha_envio` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `fk_bandeja_usuario` (`usuario_id`),
@@ -191,7 +191,7 @@ CREATE TABLE `comentarios` (
   PRIMARY KEY (`id`),
   KEY `fk_comentario_articulo` (`articulo_id`),
   CONSTRAINT `fk_comentario_articulo` FOREIGN KEY (`articulo_id`) REFERENCES `articulos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -325,7 +325,7 @@ CREATE TABLE `user_activity_log` (
   `actividad` varchar(255) NOT NULL,
   `fecha_hora` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -403,4 +403,4 @@ CREATE TABLE `valoraciones_comentarios` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-02  9:38:40
+-- Dump completed on 2024-08-03 11:53:02
