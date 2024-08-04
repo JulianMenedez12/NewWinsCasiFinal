@@ -119,7 +119,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">Instalador de Base de Datos</h1>
+        <h1 class="mt-5">Instalador de Base de Datos NewWins</h1>
+        <img src="NewWins/img/logo.png" alt="img-fluid" width="175" height="157">
         <form method="POST" class="mt-4">
             <div class="mb-3">
                 <label for="host" class="form-label">Host</label>
