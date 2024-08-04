@@ -55,6 +55,38 @@ $fechaActual = date("d/m/Y"); // Formato de fecha: día/mes/año
         dayjs.extend(window.dayjs_plugin_relativeTime);
         dayjs.locale('es');
     </script>
+    <script>
+        // Configura el plugin de tiempo relativo y el idioma español
+        dayjs.extend(window.dayjs_plugin_relativeTime);
+        dayjs.locale('es');
+    </script>
+    <style>
+        /* Estilo para hacer el header fijo en la parte superior */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* Añadir un margen superior a la página para que el contenido no quede oculto detrás del header fijo */
+        body {
+            padding-top: 70px; /* Ajusta este valor según la altura del header */
+        }
+
+        .topbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 999;
+            background-color: #f8f9fa;
+        }
+
+        .container-fluid {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+    </style>
 </head>
 
 <body>
