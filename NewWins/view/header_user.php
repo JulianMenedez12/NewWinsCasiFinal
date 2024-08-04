@@ -126,9 +126,11 @@ $fechaActual = date("d/m/Y"); // Formato de fecha: día/mes/año
                 </ul>
 
                 <div class="col-md-8 d-flex align-items-center">
-                    <div class="bg-danger text-white text-center py-2 px-3 d-none d-lg-inline-block tendencia-button hvr-pulse-grow">
-                        Tendencia
-                    </div>
+                    <a href="../controller/tendencias_controller.php" class="text-decoration-none">
+                        <div class="bg-danger text-white text-center py-2 px-3 d-none d-lg-inline-block tendencia-button hvr-pulse-grow">
+                            Tendencia
+                        </div>
+                    </a>
                     <form class="d-flex flex-grow-1" action="../controller/buscar_noticias.php" method="GET">
                         <input type="text" class="form-control me-2" name="q" placeholder="Buscar" required>
                         <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
