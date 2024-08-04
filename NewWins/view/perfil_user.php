@@ -40,7 +40,7 @@ $user = GestorUsuarios::getUserByEmail($userEmail);
                             <img id="previewImage" class="img-thumbnail" src="#" alt="Vista previa">
                             <button type="button" class="btn btn-danger mt-2" onclick="cancelUpload()">Cancelar</button>
                         </div>
-                        <form id="formSubirImagen" action="../controller/upload_profile.php" method="POST" enctype="multipart/form-data">
+                        <form id="formSubirImagen" action="../controller/upload_profile_user.php" method="POST" enctype="multipart/form-data">
                             <label for="foto_perfil" class="btn btn-primary">
                                 <i class='bx bx-upload'></i> Seleccionar archivo
                             </label><br><br>
