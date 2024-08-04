@@ -372,6 +372,34 @@ class GestorContenido
     
         return $stmt->execute();
     }
+    public function obtenerNoticiasTendencia()
+    {
+        $sql = "SELECT a.id, a.titulo, a.contenido, a.url, a.fecha_publicacion 
+                FROM articulos a
+                INNER JOIN (
+                    SELECT articulo_id, COUNT(*) AS total_likes 
+                    FROM valoraciones_articulos 
+                    WHERE valoracion = 'like' 
+                    GROUP BY articulo_id
+                ) v ON a.id = v.articulo_id
+                ORDER BY v.total_likes DESC
+                LIMIT 10"; // Ajusta el límite según tus necesidades
+    
+        $resultado = $this->conn->query($sql);
+        
+        if ($resultado) {
+            // Convertir el resultado en un array asociativo
+            $noticiasArray = [];
+            while ($row = $resultado->fetch_assoc()) {
+                $noticiasArray[] = $row;
+            }
+            return $noticiasArray;
+        } else {
+            return []; // Retornar un array vacío en caso de error
+        }
+    }
+    
+
     
 
 }
