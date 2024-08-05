@@ -16,7 +16,6 @@ $user = GestorUsuarios::getUserByEmail($userEmail);
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="../js/alert.js"></script>
-    <!-- Asegúrate de cargar jQuery y Bootstrap JS aquí si es necesario -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     
@@ -54,7 +53,7 @@ $user = GestorUsuarios::getUserByEmail($userEmail);
                 <div class="card mb-4">
                     <div class="card-header">Detalles de la cuenta</div>
                     <div class="card-body">
-                        <form action="../controller/edit_perfil_c.php" method="POST">
+                        <form action="../controller/edit_perfil_user.php" method="POST">
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputUsername">Nombre de Usuario</label>
                                 <input class="form-control" id="inputUsername" name="inputUsername" type="text" placeholder="Ingresa tu nombre de usuario" value="<?php echo htmlspecialchars($user['nombre_usuario']); ?>">
