@@ -130,7 +130,7 @@ class GestorUsuarios
     public function listarUsuarios()
 {
     // Consulta SQL para obtener el ID, nombre de usuario y correo electrónico de todos los usuarios
-    $sql = "SELECT id, nombre_usuario, correo_electronico FROM usuarios_registrados";
+    $sql = "SELECT id, nombre_usuario, correo_electronico, es_admin FROM usuarios_registrados";
     // Ejecutar la consulta SQL
     $result = $this->conn->query($sql);
 
@@ -365,5 +365,28 @@ public static function getUserIdByEmail($email)
     $conn->close();
 
     return $userId; // Retornar el ID del usuario
+}
+public function darAdmin($idUsuario) {
+    $sql = "SELECT darAdmin(?) AS result";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("i", $idUsuario);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    return $result['result'] > 0;
+}
+public function quitarAdmin($idUsuario) {
+    $sql = "SELECT quitarAdmin(?) AS result";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("i", $idUsuario);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    return $result['result'] > 0;
+}
+public function eliminarUsuario($idUsuario) {
+    $sql = "CALL EliminarUsuario(?)";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("i", $idUsuario);
+    $stmt->execute();
+    return $stmt->affected_rows > 0;
 }
 }
