@@ -15,48 +15,58 @@ use PHPMailer\PHPMailer\Exception;
 // Crear conexión
 $conn = ConexionBD::obtenerConexion();
 
-// Verificar conexión
+/**
+ * Verifica la conexión a la base de datos.
+ *
+ * @return void
+ */
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error); // Termina el script si hay un error en la conexión
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
+    $email = $_POST['email']; // Dirección de correo electrónico enviada por POST
     
-    // Verificar que el correo exista en la base de datos
+    /**
+     * Verifica si el correo existe en la base de datos.
+     *
+     * @param string $email Dirección de correo electrónico a verificar.
+     *
+     * @return void
+     */
     $sql = "SELECT id FROM usuarios_registrados WHERE correo_electronico = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
+    $stmt->bind_param("s", $email); // Vincula el parámetro de la consulta
+    $stmt->execute(); // Ejecuta la consulta
+    $stmt->store_result(); // Almacena el resultado
     
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($user_id);
+    if ($stmt->num_rows > 0) { // Si el correo existe en la base de datos
+        $stmt->bind_result($user_id); // Obtiene el ID del usuario
         $stmt->fetch();
         
-        // Generar un token único
-        $token = bin2hex(random_bytes(50));
-        $expire_date = date("Y-m-d H:i:s", strtotime('+1 hour'));
+        // Generar un token único para la recuperación de contraseña
+        $token = bin2hex(random_bytes(50)); // Token generado de forma segura
+        $expire_date = date("Y-m-d H:i:s", strtotime('+1 hour')); // Fecha de expiración del token
         
         // Guardar el token en la base de datos
         $sql = "INSERT INTO password_resets (user_id, token, expire_date) VALUES (?, ?, ?)
                 ON DUPLICATE KEY UPDATE token = VALUES(token), expire_date = VALUES(expire_date)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iss", $user_id, $token, $expire_date);
-        $stmt->execute();
+        $stmt->bind_param("iss", $user_id, $token, $expire_date); // Vincula los parámetros de la consulta
+        $stmt->execute(); // Ejecuta la consulta
         
-        // Enviar el correo de recuperación
+        // Enviar el correo de recuperación de contraseña
         $mail = new PHPMailer(true);
         
         try {
             // Configuración del servidor SMTP
             $mail->isSMTP();
-            $mail->Host       = 'smtp.mailersend.net';
+            $mail->Host       = 'smtp.mailersend.net'; // Servidor SMTP
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'MS_YYa6TN@trial-0p7kx4xn637g9yjr.mlsender.net';
-            $mail->Password   = 'iMSpvncMOY4Q4K3X';
+            $mail->Username   = 'MS_YYa6TN@trial-0p7kx4xn637g9yjr.mlsender.net'; // Usuario SMTP
+            $mail->Password   = 'iMSpvncMOY4Q4K3X'; // Contraseña SMTP
             $mail->SMTPSecure = 'tls'; // Habilitar cifrado TLS
-            $mail->Port       = 587;
+            $mail->Port       = 587; // Puerto SMTP
             
             // Remitente
             $mail->setFrom('MS_YYa6TN@trial-0p7kx4xn637g9yjr.mlsender.net', 'Newwins');
