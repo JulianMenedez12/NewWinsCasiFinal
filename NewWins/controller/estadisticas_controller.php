@@ -1,20 +1,17 @@
 <?php
-session_start();
 require_once '../model/conexion.php';
 require_once '../model/gestor_noticias.php';
 
-$conexion = ConexionBD::obtenerConexion();
-$gestorContenido = new GestorContenido($conexion);
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $fecha = $_POST['fecha'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $fechaInicio = $_POST['fecha_inicio'];
+    $fechaFin = $_POST['fecha_fin'];
     
-    $estadisticas = $gestorContenido->obtenerEstadisticasPorFecha($fecha);
+    $conexion = ConexionBD::obtenerConexion();
+    $gestorContenido = new GestorContenido($conexion);
     
-    // Almacena las estadísticas en la sesión o pasa a la vista
-    $_SESSION['estadisticas'] = $estadisticas;
+    $estadisticas = $gestorContenido->obtenerEstadisticasPorRangoFechas($fechaInicio, $fechaFin);
     
-    header("Location: ../view/estadisticas.php?fecha=$fecha");
+    header("Location: ../view/estadisticas.php?fecha_inicio=$fechaInicio&fecha_fin=$fechaFin&total_articulos={$estadisticas['total_articulos']}&total_valoraciones={$estadisticas['total_valoraciones']}&total_comentarios={$estadisticas['total_comentarios']}&total_usuarios={$estadisticas['total_usuarios']}&total_likes={$estadisticas['total_likes']}&total_dislikes={$estadisticas['total_dislikes']}&total_articulos_bandeja={$estadisticas['total_articulos_bandeja']}");
     exit();
 }
 ?>
