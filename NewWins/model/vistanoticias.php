@@ -115,24 +115,24 @@ class VistaNoticias
 
     // Método para mostrar un artículo en formato HTML
     public function mostrarArticulo($articulo)
-    {
-        // Extrae y sanitiza los datos del artículo
-        $id = htmlspecialchars($articulo['id']);
-        $titulo = htmlspecialchars($articulo['titulo']);
-        $url = htmlspecialchars($articulo['url']);
-        $fecha = htmlspecialchars($articulo['fecha_publicacion']); // Fecha de publicación del artículo
+{
+    // Extrae y sanitiza los datos del artículo
+    $id = htmlspecialchars($articulo['id']);
+    $titulo = htmlspecialchars($articulo['titulo']);
+    $url = htmlspecialchars($articulo['url']);
+    $fecha = htmlspecialchars($articulo['fecha_publicacion']); // Fecha de publicación del artículo
 
-        // Genera el HTML para mostrar un artículo en una tarjeta de Bootstrap
-        echo '<div class="col-md-4 mb-4">';
-        echo '  <div class="card">';
-        echo '      <img src="' . $url . '" class="card-img-top" alt="' . $titulo . '">'; // Imagen del artículo
-        echo '      <div class="card-body">';
-        echo '          <h5 class="card-title">' . $titulo . '</h5>'; // Título del artículo
-        echo '          <p class="card-text">' . $fecha . '</p>'; // Fecha de publicación del artículo
-        echo '          <a href="../view/ver_noticia.php?id=' . $id . '" class="stretched-link"></a>'; // Enlace para ver la noticia
-        echo '      </div>';
-        echo '  </div>';
-        echo '</div>';
-    }
+    // Genera el HTML para mostrar un artículo en una tarjeta de Bootstrap
+    echo '<div class="col-md-4 mb-4">';
+    echo '  <div class="card">';
+    echo '      <img src="' . $url . '" class="card-img-top" alt="' . $titulo . '">'; // Imagen del artículo
+    echo '      <div class="card-body">';
+    echo '          <h5 class="card-title">' . $titulo . '</h5>'; // Título del artículo
+    echo '          <p class="card-text fecha-relativa" data-fecha="' . $fecha . '"></p>'; // Fecha de publicación del artículo con data-fecha
+    echo '          <a href="../view/ver_noticia.php?id=' . $id . '" class="stretched-link"></a>'; // Enlace para ver la noticia
+    echo '      </div>';
+    echo '  </div>';
+    echo '</div>';
+}
 }
 ?>
