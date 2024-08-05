@@ -62,6 +62,9 @@ if (!isset($_SESSION['correo'])) {
                     <li class="nav-item">
                         <a class="nav-link" href="manage_bandeja.php">Bandeja de Mensajes <i class='bx bxs-inbox'></i></a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="estadisticas.php">Estadisticas <i class='bx bxs-inbox'></i></a>
+                    </li>
                 </ul>
                 <!-- Dropdown de usuario -->
                 <div class="dropdown">
