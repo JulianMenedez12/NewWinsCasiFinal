@@ -41,7 +41,21 @@ $resultados = $_SESSION['resultados_busqueda'] ?? [];
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://unpkg.com/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../js/owlcarousel/owl.carousel.min.js"></script>
+<script src="https://unpkg.com/owl.carousel/dist/owl.carousel.min.js"></script>
+<script src="https://unpkg.com/dayjs/dayjs.min.js"></script>
+<script src="https://unpkg.com/dayjs/plugin/relativeTime.js"></script>
+<script src="https://unpkg.com/dayjs/locale/es.js"></script>
+<script>
+    dayjs.extend(dayjs_plugin_relativeTime);
+    dayjs.locale('es'); // Configurar dayjs para usar español
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.fecha-relativa').forEach(function(element) {
+            var fecha = element.getAttribute('data-fecha');
+            element.textContent = dayjs(fecha).fromNow();
+        });
+    });
+</script>
 <script src="../js/main.js"></script>
 </body>
 

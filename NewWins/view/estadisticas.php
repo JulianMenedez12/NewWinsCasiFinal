@@ -2,96 +2,92 @@
 require_once '../model/conexion.php';
 require_once '../model/gestor_noticias.php';
 
-$conexion = ConexionBD::obtenerConexion();
-$gestorContenido = new GestorContenido($conexion);
-
 $estadisticas = [];
-$fecha = '';
+$fechaInicio = '';
+$fechaFin = '';
 
-if (isset($_GET['fecha'])) {
-    $fecha = $_GET['fecha'];
-    $estadisticas = $gestorContenido->obtenerEstadisticasPorFecha($fecha);
+if (isset($_GET['fecha_inicio']) && isset($_GET['fecha_fin'])) {
+    $fechaInicio = $_GET['fecha_inicio'];
+    $fechaFin = $_GET['fecha_fin'];
+    $estadisticas = [
+        'total_articulos' => $_GET['total_articulos'],
+        'total_valoraciones' => $_GET['total_valoraciones'],
+        'total_comentarios' => $_GET['total_comentarios'],
+        'total_usuarios' => $_GET['total_usuarios'],
+        'total_likes' => $_GET['total_likes'],
+        'total_dislikes' => $_GET['total_dislikes'],
+        'total_articulos_bandeja' => $_GET['total_articulos_bandeja']
+    ];
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Estadísticas</title>
     <link rel="stylesheet" href="../css/style.css"> <!-- Incluye tu archivo CSS aquí -->
-    <style>
-        .table-container {
-            margin-top: 20px;
-        }
-        .stats-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .stats-table th, .stats-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        .stats-table th {
-            background-color: #f2f2f2;
-        }
-    </style>
 </head>
 <body>
     <?php include('header.php'); ?>
-
+    
     <!-- Main Content Start -->
     <div class="container mt-4">
-        <h1>Estadísticas para la fecha: <?php echo htmlspecialchars($fecha); ?></h1>
+        <h1>Estadísticas para el rango de fechas: <?php echo htmlspecialchars($fechaInicio); ?> a <?php echo htmlspecialchars($fechaFin); ?></h1>
         
-        <form method="GET" action="" class="mb-4">
-            <label for="fecha">Selecciona una fecha:</label>
-            <input type="date" id="fecha" name="fecha" value="<?php echo htmlspecialchars($fecha); ?>" required>
+        <form method="POST" action="../controller/estadisticas_controller.php" class="mb-4">
+            <label for="fecha_inicio">Fecha de inicio:</label>
+            <input type="date" id="fecha_inicio" name="fecha_inicio" required>
+            <label for="fecha_fin">Fecha de fin:</label>
+            <input type="date" id="fecha_fin" name="fecha_fin" required>
             <button type="submit" class="btn btn-primary">Obtener Estadísticas</button>
         </form>
         
-        <div class="table-container">
-            <?php if ($fecha && !empty($estadisticas)) : ?>
-                <table class="stats-table">
+        <?php if ($fechaInicio && $fechaFin && $estadisticas) : ?>
+            <div class="table-responsive">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Descripción</th>
+                            <th>Estadística</th>
                             <th>Valor</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Total de artículos publicados</td>
-                            <td><?php echo isset($estadisticas['total_articulos']) ? htmlspecialchars($estadisticas['total_articulos']) : 'No disponible'; ?></td>
+                            <td><?php echo htmlspecialchars($estadisticas['total_articulos']); ?></td>
                         </tr>
                         <tr>
                             <td>Total de valoraciones</td>
-                            <td><?php echo isset($estadisticas['total_valoraciones']) ? htmlspecialchars($estadisticas['total_valoraciones']) : 'No disponible'; ?></td>
+                            <td><?php echo htmlspecialchars($estadisticas['total_valoraciones']); ?></td>
                         </tr>
                         <tr>
-                            <td>Likes</td>
-                            <td><?php echo isset($estadisticas['total_likes']) ? htmlspecialchars($estadisticas['total_likes']) : 'No disponible'; ?></td>
-                        </tr>
-                        <tr>
-                            <td>Dislikes</td>
-                            <td><?php echo isset($estadisticas['total_dislikes']) ? htmlspecialchars($estadisticas['total_dislikes']) : 'No disponible'; ?></td>
+                            <td>Total de comentarios</td>
+                            <td><?php echo htmlspecialchars($estadisticas['total_comentarios']); ?></td>
                         </tr>
                         <tr>
                             <td>Total de usuarios registrados</td>
-                            <td><?php echo isset($estadisticas['total_usuarios']) ? htmlspecialchars($estadisticas['total_usuarios']) : 'No disponible'; ?></td>
+                            <td><?php echo htmlspecialchars($estadisticas['total_usuarios']); ?></td>
+                        </tr>
+                        <tr>
+                            <td>Likes</td>
+                            <td><?php echo htmlspecialchars($estadisticas['total_likes']); ?></td>
+                        </tr>
+                        <tr>
+                            <td>Dislikes</td>
+                            <td><?php echo htmlspecialchars($estadisticas['total_dislikes']); ?></td>
                         </tr>
                         <tr>
                             <td>Total de artículos en bandeja</td>
-                            <td><?php echo isset($estadisticas['total_articulos_bandeja']) ? htmlspecialchars($estadisticas['total_articulos_bandeja']) : 'No disponible'; ?></td>
+                            <td><?php echo htmlspecialchars($estadisticas['total_articulos_bandeja']); ?></td>
                         </tr>
                     </tbody>
                 </table>
-            <?php elseif ($fecha) : ?>
-                <p>No se encontraron estadísticas para la fecha seleccionada.</p>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php elseif ($fechaInicio && $fechaFin) : ?>
+            <p>No se encontraron estadísticas para el rango de fechas seleccionado.</p>
+        <?php endif; ?>
     </div>
     <!-- Main Content End -->
 

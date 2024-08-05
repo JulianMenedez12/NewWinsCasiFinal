@@ -50,7 +50,7 @@
                                     <div class="col-12">
                                         <div class="cf-turnstile" data-sitekey="0x4AAAAAAAgIXngXPyh0WPqy" data-theme='light'></div>
                                         <div class="d-grid my-3">
-                                            <button class="btn btn-primary btn-lg" type="submit">Iniciar Sesión</button>
+                                            <button class="btn btn-danger btn-lg" type="submit">Iniciar Sesión</button>
                                         </div>
                                         <div class="col-12">
                                             <a href="index.php" class="link-primary text-decoration-none">Volver</a>

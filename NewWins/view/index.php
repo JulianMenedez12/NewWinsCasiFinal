@@ -19,23 +19,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        /* Estilos adicionales para el video */
-        .video-container {
-            position: relative;
-            overflow: hidden;
-            padding-top: 56.25%;
-            /* Ratio 16:9 para mantener la proporción del video */
-        }
 
-        .video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
 </head>
 
 <body>
@@ -160,15 +144,6 @@
                                 });
                             </script>
                         </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <!-- Contenedor del video -->
-                    <div class="video-container">
-                        <video controls>
-                            <source src="../img/NEW WINS.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
                     </div>
                 </div>
             </div>
