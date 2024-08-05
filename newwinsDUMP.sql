@@ -201,15 +201,6 @@ CREATE TABLE `comentarios` (
 /*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER log_user_activity
-AFTER INSERT ON comentarios
-FOR EACH ROW
-BEGIN
-    INSERT INTO user_activity_log (usuario, actividad, fecha_hora)
-    VALUES (NEW.usuario, 'Nuevo comentario', NOW());
-END */;;
-DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
@@ -416,6 +407,10 @@ CREATE TABLE `valoraciones_comentarios` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping events for database 'newwins'
+--
+
+--
 -- Dumping routines for database 'newwins'
 --
 /*!50003 DROP FUNCTION IF EXISTS `darAdmin` */;
@@ -427,92 +422,7 @@ CREATE TABLE `valoraciones_comentarios` (
 /*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `darAdmin`(idUsuario INT) RETURNS int(11)
-BEGIN
-    UPDATE usuarios_registrados SET es_admin = 1 WHERE id = idUsuario;
-    RETURN ROW_COUNT();
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `quitarAdmin` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `quitarAdmin`(idUsuario INT) RETURNS int(11)
-BEGIN
-    UPDATE usuarios_registrados SET es_admin = 0 WHERE id = idUsuario;
-    RETURN ROW_COUNT();
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `EliminarUsuario` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarUsuario`(
-    IN userId INT
-)
-BEGIN
-    DELETE FROM usuarios_registrados WHERE id = userId;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_agregar_valoracion` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_agregar_valoracion`(IN p_articulo_id INT, IN p_usuario_id INT, IN p_valoracion ENUM('like', 'dislike'))
-BEGIN
-    DECLARE valoracionExistente ENUM('like', 'dislike');
 
-    -- Verifica si ya existe una valoración
-    SELECT valoracion INTO valoracionExistente
-    FROM valoraciones_articulos
-    WHERE articulo_id = p_articulo_id AND usuario_id = p_usuario_id;
-
-    IF valoracionExistente IS NOT NULL THEN
-        -- Actualiza la valoración existente
-        UPDATE valoraciones_articulos
-        SET valoracion = p_valoracion
-        WHERE articulo_id = p_articulo_id AND usuario_id = p_usuario_id;
-    ELSE
-        -- Inserta una nueva valoración
-        INSERT INTO valoraciones_articulos (articulo_id, usuario_id, valoracion)
-        VALUES (p_articulo_id, p_usuario_id, p_valoracion);
-    END IF;
-
-    -- Llama al trigger para actualizar conteos
-    CALL update_likes_dislikes();
-END ;;
-DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
@@ -527,4 +437,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-05 17:03:41
+-- Dump completed on 2024-08-05 18:12:32
