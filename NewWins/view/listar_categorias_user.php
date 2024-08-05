@@ -1,6 +1,4 @@
 <?php
-
-
 require_once '../model/conexion.php';
 require_once '../model/gestor_noticias.php';
 require_once '../model/vistanoticias.php';
@@ -15,10 +13,13 @@ $vistaNoticias = new VistaNoticias($gestorContenido);
 
 // Obtener la fecha actual
 $fechaActual = date("d/m/Y"); // Formato de fecha: día/mes/año
-//obtener nombre de categoria para el titulo//
-if ($categoria_id>0){
-$categoria_name = $gestorContenido->obtenerCategoriaPorId($categoria_id);
+
+// Obtener nombre de categoría para el título
+$categoria_name = [];
+if ($categoria_id > 0) {
+    $categoria_name = $gestorContenido->obtenerCategoriaPorId($categoria_id);
 }
+
 // Obtener artículos relacionados con la categoría seleccionada
 $articulos = [];
 if ($categoria_id > 0) {
@@ -27,7 +28,7 @@ if ($categoria_id > 0) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -38,21 +39,37 @@ if ($categoria_id > 0) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/owlcarousel/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="../css/style.css"> <!-- Agrega tu archivo CSS personalizado aquí -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/relativeTime.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/locale/es.js"></script>
+    <script>
+        // Configura el plugin de tiempo relativo y el idioma español
+        dayjs.extend(window.dayjs_plugin_relativeTime);
+        dayjs.locale('es');
+    </script>
 </head>
 
 <body>
-<?php
-include ('header_user.php')
-?>
-    <!-- Navbar End -->
-
+<?php include('header_user.php'); ?>
     <!-- Main Content Start -->
     <div class="container mt-4">
         <?php if ($categoria_id > 0 && !empty($articulos)) : ?>
             <h2 class="mb-4">Artículos en la categoría: <?php echo htmlspecialchars($categoria_name['nombre']); ?></h2>
             <div class="row">
                 <?php foreach ($articulos as $articulo) : ?>
-                    <?php $vistaNoticias->mostrarArticulo($articulo); ?>
+                    <div class="col-md-4 mb-4">
+                        <a href="ver_noticia.php?id=<?php echo $articulo['id']; ?>" style="text-decoration:none">
+                            <div class="card">
+                                <img src="<?php echo $articulo['url']; ?>" class="card-img-top" alt="<?php echo htmlspecialchars($articulo['titulo']); ?>">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo htmlspecialchars($articulo['titulo']); ?></h5>
+                                    <p class="card-text">
+                                        <span class="fecha-articulo" data-fecha="<?php echo $articulo['fecha_publicacion']; ?>"></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 <?php endforeach; ?>
             </div>
         <?php else : ?>
@@ -64,7 +81,20 @@ include ('header_user.php')
     <?php include('footer_user.php'); ?>
 
     <!-- Scripts -->
-    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fechas = document.querySelectorAll('.fecha-articulo');
+            fechas.forEach(fecha => {
+                const fechaOriginal = fecha.getAttribute('data-fecha');
+                if (fechaOriginal) {
+                    const fechaRelativa = dayjs(fechaOriginal).fromNow();
+                    fecha.textContent = fechaRelativa;
+                } else {
+                    console.log('Fecha original no encontrada');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
