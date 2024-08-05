@@ -1,10 +1,14 @@
-<title>Seguridad</title>
-<?php
-
-include('header_user.php')
-?>
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguridad</title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
 <body>
+    <?php include('header_user.php'); ?>
+
     <div class="container-xl px-4 mt-4">
         <nav class="nav nav-borders">
             <a class="nav-link ms-0" href="perfil_user.php">Perfil</a>
@@ -41,10 +45,12 @@ include('header_user.php')
         <div class="card-header">Eliminar tu cuenta</div>
         <div class="card-body">
             <p>Eliminar su cuenta es una acción permanente y no se puede deshacer. Si está seguro de que desea eliminar su cuenta, seleccione el botón a continuación.</p>
-            <button class="btn btn-danger-soft text-danger" type="button">Entiendo, borrar mi cuenta</button>
+            <form method="POST" action="../controller/eliminar_usuario.php" onsubmit="return confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.');">
+                <input type="hidden" name="id_usuario" value="<?php echo $_SESSION['user_id']; ?>">
+                <button class="btn btn-danger" type="submit">Entiendo, borrar mi cuenta</button>
+            </form>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 </body>
-
 </html>
