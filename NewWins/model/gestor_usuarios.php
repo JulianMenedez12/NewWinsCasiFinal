@@ -126,7 +126,11 @@ class GestorUsuarios
         }
     }
 
-
+   /**
+ * Lista todos los usuarios registrados.
+ * 
+ * @return array Array de usuarios con sus datos.
+ */
     public function listarUsuarios()
 {
     // Consulta SQL para obtener el ID, nombre de usuario y correo electrónico de todos los usuarios
@@ -149,7 +153,17 @@ class GestorUsuarios
     // Retornar el array de usuarios
     return $usuarios;
 }
-
+/**
+ * Actualiza la información del perfil de un usuario.
+ * 
+ * @param int $idUsuario ID del usuario a actualizar.
+ * @param string $username Nombre de usuario nuevo.
+ * @param string $nombre Primer nombre del usuario.
+ * @param string $apellido Apellido del usuario.
+ * @param string $ubicacion Ubicación del usuario.
+ * @param string $correo Nuevo correo electrónico del usuario.
+ * @return bool Retorna verdadero si la actualización fue exitosa, falso en caso contrario.
+ */
 public function actualizarPerfil($idUsuario, $username, $nombre, $apellido, $ubicacion, $correo)
 {
     // Consulta SQL para actualizar los datos del perfil del usuario
@@ -177,7 +191,11 @@ public function actualizarPerfil($idUsuario, $username, $nombre, $apellido, $ubi
     // Cerrar la declaración preparada
     $stmt->close();
 }
-
+/**
+ * Obtiene todos los usuarios registrados.
+ * 
+ * @return array Array de usuarios con nombre de usuario, correo electrónico y rol de administrador.
+ */
 public static function getUsers()
 {
     // Obtener la conexión a la base de datos
@@ -208,7 +226,12 @@ public static function getUsers()
     // Retornar el array de usuarios
     return $usuarios;
 }
-
+/**
+ * Obtiene los detalles de un usuario por su correo electrónico.
+ * 
+ * @param string $email Correo electrónico del usuario a obtener.
+ * @return array|null Array con los detalles del usuario o null si no se encuentra.
+ */
 public static function getUserByEmail($email)
 {
     // Crear conexión a la base de datos
@@ -244,7 +267,16 @@ public static function getUserByEmail($email)
     // Retornar el usuario
     return $user;
 }
-
+/**
+ * Actualiza la información del usuario basado en su correo electrónico actual.
+ * 
+ * @param string $currentEmail Correo electrónico actual del usuario.
+ * @param string $username Nuevo nombre de usuario.
+ * @param string $firstName Nuevo primer nombre del usuario.
+ * @param string $lastName Nuevo apellido del usuario.
+ * @param string $location Nueva ubicación del usuario.
+ * @param string $email Nuevo correo electrónico del usuario.
+ */
 public static function updateUser($currentEmail, $username, $firstName, $lastName, $location, $email)
 {
     // Crear conexión a la base de datos
@@ -267,7 +299,13 @@ public static function updateUser($currentEmail, $username, $firstName, $lastNam
     // Cerrar la conexión a la base de datos
     $conn->close();
 }
-
+/**
+ * Subir una foto de perfil para un usuario.
+ * 
+ * @param string $userEmail Correo electrónico del usuario para actualizar la foto de perfil.
+ * @param array $file Array que contiene la información del archivo subido.
+ * @return bool|string Retorna verdadero si la subida fue exitosa, o un mensaje de error en caso contrario.
+ */
 public function subirFotoPerfil($userEmail, $file)
 {
     // Verificar si hay algún error en el archivo subido
@@ -306,7 +344,14 @@ public function subirFotoPerfil($userEmail, $file)
         return 'Error al actualizar la base de datos.';
     }
 }
-
+/**
+ * Cambia la contraseña de un usuario.
+ * 
+ * @param string $correo Correo electrónico del usuario.
+ * @param string $currentPassword Contraseña actual del usuario.
+ * @param string $newPassword Nueva contraseña para el usuario.
+ * @return bool Retorna verdadero si el cambio de contraseña fue exitoso, falso en caso contrario.
+ */
 public function cambiarContrasena($correo, $currentPassword, $newPassword)
 {
     // Obtener la contraseña actual del usuario desde la base de datos
@@ -332,7 +377,12 @@ public function cambiarContrasena($correo, $currentPassword, $newPassword)
         return false; // La contraseña actual es incorrecta
     }
 }
-
+/**
+ * Obtiene el ID del usuario basado en su correo electrónico.
+ * 
+ * @param string $email Correo electrónico del usuario.
+ * @return int|null Retorna el ID del usuario o null si no se encuentra.
+ */
 public static function getUserIdByEmail($email)
 {
     // Crear conexión a la base de datos
@@ -366,27 +416,84 @@ public static function getUserIdByEmail($email)
 
     return $userId; // Retornar el ID del usuario
 }
+/**
+ * Asigna el rol de administrador a un usuario.
+ * 
+ * @param int $idUsuario ID del usuario a promover a administrador.
+ * @return bool Retorna verdadero si el rol se asignó correctamente, falso en caso contrario.
+ */
+/**
+ * Asigna el rol de administrador a un usuario.
+ * 
+ * @param int $idUsuario ID del usuario al que se le asignará el rol de administrador.
+ * @return bool Retorna verdadero si el rol se asignó correctamente, falso en caso contrario.
+ */
 public function darAdmin($idUsuario) {
+    // Consulta SQL que llama al procedimiento almacenado para asignar el rol de administrador
     $sql = "SELECT darAdmin(?) AS result";
+    
+    // Preparar la consulta SQL para ejecutar con parámetros
     $stmt = $this->conn->prepare($sql);
+    
+    // Enlazar el parámetro $idUsuario a la consulta preparada
     $stmt->bind_param("i", $idUsuario);
+    
+    // Ejecutar la consulta
     $stmt->execute();
+    
+    // Obtener el resultado de la consulta ejecutada y almacenarlo en un array asociativo
     $result = $stmt->get_result()->fetch_assoc();
+    
+    // Retornar verdadero si el resultado es mayor a 0, indicando éxito; falso en caso contrario
     return $result['result'] > 0;
 }
+
+/**
+ * Revoca el rol de administrador de un usuario.
+ * 
+ * @param int $idUsuario ID del usuario al que se le revocará el rol de administrador.
+ * @return bool Retorna verdadero si el rol se revocó correctamente, falso en caso contrario.
+ */
 public function quitarAdmin($idUsuario) {
+    // Consulta SQL que llama al procedimiento almacenado para revocar el rol de administrador
     $sql = "SELECT quitarAdmin(?) AS result";
+    
+    // Preparar la consulta SQL para ejecutar con parámetros
     $stmt = $this->conn->prepare($sql);
+    
+    // Enlazar el parámetro $idUsuario a la consulta preparada
     $stmt->bind_param("i", $idUsuario);
+    
+    // Ejecutar la consulta
     $stmt->execute();
+    
+    // Obtener el resultado de la consulta ejecutada y almacenarlo en un array asociativo
     $result = $stmt->get_result()->fetch_assoc();
+    
+    // Retornar verdadero si el resultado es mayor a 0, indicando éxito; falso en caso contrario
     return $result['result'] > 0;
 }
+
+/**
+ * Elimina un usuario de la base de datos.
+ * 
+ * @param int $idUsuario ID del usuario a eliminar.
+ * @return bool Retorna verdadero si el usuario fue eliminado exitosamente, falso en caso contrario.
+ */
 public function eliminarUsuario($idUsuario) {
+    // Consulta SQL que llama al procedimiento almacenado para eliminar un usuario
     $sql = "CALL EliminarUsuario(?)";
+    
+    // Preparar la consulta SQL para ejecutar con parámetros
     $stmt = $this->conn->prepare($sql);
+    
+    // Enlazar el parámetro $idUsuario a la consulta preparada
     $stmt->bind_param("i", $idUsuario);
+    
+    // Ejecutar la consulta
     $stmt->execute();
+    
+    // Retornar verdadero si al menos una fila fue afectada, indicando que la eliminación fue exitosa
     return $stmt->affected_rows > 0;
 }
 }

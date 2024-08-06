@@ -10,6 +10,9 @@ class VistaNoticias
 
     // Constructor que recibe una instancia de GestorContenido
     // Esta instancia se usa para obtener datos de noticias
+    /**
+    * @param GestorContenido $gestorContenido Instancia de GestorContenido para acceder a métodos de gestión de noticias.
+    */
     public function __construct(GestorContenido $gestorContenido)
     {
         $this->gestorContenido = $gestorContenido; // Asigna la instancia de GestorContenido a la propiedad de la clase
@@ -44,6 +47,9 @@ class VistaNoticias
     }
 
     // Método para mostrar una noticia específica identificada por su ID
+    /**
+ * @param int $id ID de la noticia a mostrar.
+ */
     public function mostrarNoticiaPorId($id)
     {
         try {
@@ -58,6 +64,9 @@ class VistaNoticias
     }
 
     // Método privado para mostrar una noticia en formato HTML
+    /**
+    * @param array $noticia Datos de la noticia a mostrar.
+    */
     private function mostrarNoticia($noticia)
     {
         // Genera el HTML para mostrar una noticia en una tarjeta de Bootstrap
@@ -74,6 +83,10 @@ class VistaNoticias
     }
 
     // Método para mostrar noticias con paginación
+    /**
+    * @param int $pagina Número de la página para paginación.
+    * @param int $noticiasPorPagina Número de noticias por página.
+    */
     public function mostrarNoticiasConPaginacion($pagina = 1, $noticiasPorPagina = 10)
     {
         // Calcula el desplazamiento (offset) para la paginación
@@ -100,6 +113,9 @@ class VistaNoticias
     }
 
     // Método para mostrar una noticia específica con detalles, identificada por su ID
+    /**
+    * @param int $id ID de la noticia a mostrar con detalles.
+     */
     public function mostrarNoticiaConDetalles($id)
     {
         try {
@@ -114,25 +130,28 @@ class VistaNoticias
     }
 
     // Método para mostrar un artículo en formato HTML
+    /**
+    * @param array $articulo Datos del artículo a mostrar.
+    */
     public function mostrarArticulo($articulo)
-{
-    // Extrae y sanitiza los datos del artículo
-    $id = htmlspecialchars($articulo['id']);
-    $titulo = htmlspecialchars($articulo['titulo']);
-    $url = htmlspecialchars($articulo['url']);
-    $fecha = htmlspecialchars($articulo['fecha_publicacion']); // Fecha de publicación del artículo
+    {
+        // Extrae y sanitiza los datos del artículo
+        $id = htmlspecialchars($articulo['id']);
+        $titulo = htmlspecialchars($articulo['titulo']);
+        $url = htmlspecialchars($articulo['url']);
+        $fecha = htmlspecialchars($articulo['fecha_publicacion']); // Fecha de publicación del artículo
 
-    // Genera el HTML para mostrar un artículo en una tarjeta de Bootstrap
-    echo '<div class="col-md-4 mb-4">';
-    echo '  <div class="card">';
-    echo '      <img src="' . $url . '" class="card-img-top" alt="' . $titulo . '">'; // Imagen del artículo
-    echo '      <div class="card-body">';
-    echo '          <h5 class="card-title">' . $titulo . '</h5>'; // Título del artículo
-    echo '          <p class="card-text fecha-relativa" data-fecha="' . $fecha . '"></p>'; // Fecha de publicación del artículo con data-fecha
-    echo '          <a href="../view/ver_noticia.php?id=' . $id . '" class="stretched-link"></a>'; // Enlace para ver la noticia
-    echo '      </div>';
-    echo '  </div>';
-    echo '</div>';
-}
+        // Genera el HTML para mostrar un artículo en una tarjeta de Bootstrap
+        echo '<div class="col-md-4 mb-4">';
+        echo '  <div class="card">';
+        echo '      <img src="' . $url . '" class="card-img-top" alt="' . $titulo . '">'; // Imagen del artículo
+        echo '      <div class="card-body">';
+        echo '          <h5 class="card-title">' . $titulo . '</h5>'; // Título del artículo
+        echo '          <p class="card-text">' . $fecha . '</p>'; // Fecha de publicación del artículo
+        echo '          <a href="../view/ver_noticia.php?id=' . $id . '" class="stretched-link"></a>'; // Enlace para ver la noticia
+        echo '      </div>';
+        echo '  </div>';
+        echo '</div>';
+    }
 }
 ?>
