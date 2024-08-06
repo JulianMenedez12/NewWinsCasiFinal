@@ -73,7 +73,7 @@
 
                                     <div class="mb-4">
                                         <div class="form-outline">
-                                            <input type="password" name="contrasena" id="contrasena" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}" title="La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un símbolo." required />
+                                            <input type="password" name="contrasena" id="contrasena" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}" title="La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un símbolo(*)." required />
                                             <label class="form-label" for="contrasena">Contraseña</label>
                                         </div>
                                     </div>
