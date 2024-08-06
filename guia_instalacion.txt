@@ -14,7 +14,7 @@ Serás redirigido a un formulario de configuración.
 Completa el formulario de configuración ingresando los detalles del host, usuario, contraseña, y nombre de la base de datos que deseas usar.
 El instalador creará la base de datos y configurará el archivo de conexión automáticamente.
 5. Acceder al Sitio
-Una vez completada la instalación, seras redireccionado al sitio en http://localhost/NewWinsCasiFinal/NewWins/.
+Una vez completada la instalación, seras redireccionado al sitio en http://localhost/NewWinsCasiFinal-main/newwins/view/.
 6. Inicia sesión con las credenciales de administrador por defecto:
 Email: admin@gmail.com
 Contraseña: contraseña
