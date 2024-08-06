@@ -14,6 +14,7 @@ $error = isset($_GET['error']) ? $_GET['error'] : '';
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noticias en Tendencia</title>
+    <link rel="icon" href="../img/logo.png" type="image/png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css"> <!-- Agrega tu archivo CSS personalizado aquí -->
 

@@ -1,6 +1,7 @@
 <?php include 'header.php'; ?>
 <head>
     <title>Bandeja de mensajes</title>
+    <link rel="icon" href="../img/logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bootstrap-4/bootstrap-4.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/alert1.js"></script>

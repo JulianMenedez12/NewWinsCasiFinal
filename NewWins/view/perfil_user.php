@@ -12,6 +12,7 @@ $user = GestorUsuarios::getUserByEmail($userEmail);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
+    <link rel="icon" href="../img/logo.png" type="image/png">
     <link rel="stylesheet" href="../css/styless.css">
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

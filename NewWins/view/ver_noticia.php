@@ -32,6 +32,7 @@ if (!$noticia) {
     <meta charset="utf-8">
     <meta name="google-adsense-account" content="ca-pub-8262837766739470">
     <title><?php echo $noticia['titulo']; ?> - NEWWINS</title>
+    <link rel="icon" href="../img/logo.png" type="image/png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css"> <!-- Agrega tu archivo CSS personalizado aquí -->
     <link rel="stylesheet" href="../css/bandeja.css">

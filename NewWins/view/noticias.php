@@ -15,6 +15,7 @@ $usuarios = $gestorUsuarios->listarUsuarios();
 ?>
 <head>
     <title>Gestión de usuarios</title>
+    <link rel="icon" href="../img/logo.png" type="image/png">
 </head>
 <div class="container-fluid">
     <div class="row">

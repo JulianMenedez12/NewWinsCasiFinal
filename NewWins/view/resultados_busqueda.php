@@ -40,7 +40,6 @@ $resultados = $_SESSION['resultados_busqueda'] ?? [];
 
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://unpkg.com/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/owl.carousel/dist/owl.carousel.min.js"></script>
 <script src="https://unpkg.com/dayjs/dayjs.min.js"></script>
 <script src="https://unpkg.com/dayjs/plugin/relativeTime.js"></script>

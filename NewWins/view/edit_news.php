@@ -14,6 +14,7 @@ include 'header.php';
 <head>
     <meta charset="UTF-8">
     <title>Gestionar Artículos</title>
+    <link rel="icon" href="../img/logo.png" type="image/png">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/alert.js"></script> <!-- Asegúrate de usar la ruta correcta -->
         <script src="https://cdn.tiny.cloud/1/fj76e7aualveq77f2n0uc7mcz6cdimvxob2lx0yl9o4rwkhp/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>

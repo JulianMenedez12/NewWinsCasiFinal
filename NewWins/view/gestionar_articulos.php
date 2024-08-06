@@ -12,6 +12,7 @@ include 'header.php';
 ?>
 <head>
     <title>Gestión de Artículos</title>
+    <link rel="icon" href="../img/logo.png" type="image/png">
     <link rel="stylesheet" href="../css/bandeja.css">
 </head>
 <div class="container-fluid">

@@ -36,6 +36,7 @@ $fechaActual = date("d/m/Y"); // Formato de fecha: día/mes/año
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-adsense-account" content="ca-pub-8262837766739470">
     <title>NEWWINS</title>
+    <link rel="icon" href="../img/logo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">

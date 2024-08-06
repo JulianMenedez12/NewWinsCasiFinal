@@ -6,6 +6,7 @@
     <title>Noticias</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css"> <!-- Agrega tu archivo CSS personalizado aquí -->
+    <link rel="icon" href="../img/logo.png" type="image/png">
 
     <!-- Incluye Day.js desde un CDN -->
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
