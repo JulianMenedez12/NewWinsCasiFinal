@@ -370,27 +370,16 @@ public function agregarComentario($usuario, $texto, $puntuacion, $articulo_id)
  * 
  * @return array Devuelve un array de comentarios que pertenecen al artículo especificado.
  */
-public function obtenerComentariosPorArticuloId($articulo_id)
-{
-    // Consulta SQL para seleccionar los comentarios de un artículo ordenados por fecha
-    $sql = "SELECT usuario, fecha_hora, texto, puntuacion FROM comentarios WHERE articulo_id = ? ORDER BY fecha_hora DESC";
-    // Preparar la consulta SQL
-    $stmt = $this->conn->prepare($sql);
-    // Vincular el parámetro de ID de artículo a la consulta preparada
+public function obtenerComentariosPorArticuloId($articulo_id) {
+    $query = "SELECT c.texto, c.fecha_hora, u.nombre_usuario, u.foto_perfil
+              FROM comentarios c
+              JOIN usuarios_registrados u ON c.usuario = u.nombre_usuario
+              WHERE c.articulo_id = ?";
+    $stmt = $this->conn->prepare($query);
     $stmt->bind_param("i", $articulo_id);
     $stmt->execute();
     $result = $stmt->get_result();
-
-    // Recopilar los comentarios en un array
-    $comentarios = [];
-    while ($row = $result->fetch_assoc()) {
-        $comentarios[] = $row;
-    }
-    // Cerrar la declaración
-    $stmt->close();
-    
-    // Devolver el array de comentarios
-    return $comentarios;
+    return $result->fetch_all(MYSQLI_ASSOC);
 }
 
 /**
