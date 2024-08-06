@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: newwins
+-- Host: 127.0.0.1    Database: saa
 -- ------------------------------------------------------
 -- Server version	5.5.5-10.4.32-MariaDB
 
@@ -32,74 +32,7 @@ CREATE TABLE `articulos` (
   PRIMARY KEY (`id`),
   KEY `fk_categoria` (`categoria_id`),
   CONSTRAINT `fk_categoria` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `articulos_autores`
---
-
-DROP TABLE IF EXISTS `articulos_autores`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `articulos_autores` (
-  `articulo_id` int(11) NOT NULL,
-  `autor_id` int(11) NOT NULL,
-  PRIMARY KEY (`articulo_id`,`autor_id`),
-  KEY `fk_autor` (`autor_id`),
-  CONSTRAINT `fk_articulo` FOREIGN KEY (`articulo_id`) REFERENCES `articulos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_autor` FOREIGN KEY (`autor_id`) REFERENCES `autores` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `articulos_etiquetas`
---
-
-DROP TABLE IF EXISTS `articulos_etiquetas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `articulos_etiquetas` (
-  `articulo_id` int(11) NOT NULL,
-  `etiqueta_id` int(11) NOT NULL,
-  PRIMARY KEY (`articulo_id`,`etiqueta_id`),
-  KEY `fk_etiqueta_articulo` (`etiqueta_id`),
-  CONSTRAINT `fk_articulo_etiqueta` FOREIGN KEY (`articulo_id`) REFERENCES `articulos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_etiqueta_articulo` FOREIGN KEY (`etiqueta_id`) REFERENCES `etiquetas` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `articulos_eventos`
---
-
-DROP TABLE IF EXISTS `articulos_eventos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `articulos_eventos` (
-  `articulo_id` int(11) NOT NULL,
-  `evento_id` int(11) NOT NULL,
-  PRIMARY KEY (`articulo_id`,`evento_id`),
-  KEY `fk_evento_articulo` (`evento_id`),
-  CONSTRAINT `fk_articulo_evento` FOREIGN KEY (`articulo_id`) REFERENCES `articulos` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_evento_articulo` FOREIGN KEY (`evento_id`) REFERENCES `eventos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `autores`
---
-
-DROP TABLE IF EXISTS `autores`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `autores` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) NOT NULL,
-  `foto_perfil` varchar(255) NOT NULL,
-  `biografia` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,40 +55,7 @@ CREATE TABLE `bandeja_entrada` (
   KEY `fk_bandeja_categoria` (`categoria_id`),
   CONSTRAINT `fk_bandeja_categoria` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_bandeja_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios_registrados` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `boletines`
---
-
-DROP TABLE IF EXISTS `boletines`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `boletines` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(255) NOT NULL,
-  `contenido` text NOT NULL,
-  `fecha_envio` timestamp NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `boletines_usuarios`
---
-
-DROP TABLE IF EXISTS `boletines_usuarios`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `boletines_usuarios` (
-  `boletin_id` int(11) NOT NULL,
-  `usuario_id` int(11) NOT NULL,
-  PRIMARY KEY (`boletin_id`,`usuario_id`),
-  KEY `fk_usuario_boletin` (`usuario_id`),
-  CONSTRAINT `fk_boletin_usuario` FOREIGN KEY (`boletin_id`) REFERENCES `boletines` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_usuario_boletin` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios_registrados` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,7 +71,7 @@ CREATE TABLE `categorias` (
   `descripcion` text NOT NULL,
   `imagen` blob DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,73 +95,6 @@ CREATE TABLE `comentarios` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `etiquetas`
---
-
-DROP TABLE IF EXISTS `etiquetas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `etiquetas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) NOT NULL,
-  `descripcion` text DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_nombre_etiqueta` (`nombre`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `eventos`
---
-
-DROP TABLE IF EXISTS `eventos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `eventos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha` date NOT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `descripcion` text DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `historial_edicion`
---
-
-DROP TABLE IF EXISTS `historial_edicion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `historial_edicion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `articulo_id` int(11) NOT NULL,
-  `fecha_hora` timestamp NULL DEFAULT current_timestamp(),
-  `cambio` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_historial_articulo` (`articulo_id`),
-  CONSTRAINT `fk_historial_articulo` FOREIGN KEY (`articulo_id`) REFERENCES `articulos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `imagenes_multimedia`
---
-
-DROP TABLE IF EXISTS `imagenes_multimedia`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `imagenes_multimedia` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `url` varchar(255) NOT NULL,
-  `articulo_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_imagen_articulo` (`articulo_id`),
-  CONSTRAINT `fk_imagen_articulo` FOREIGN KEY (`articulo_id`) REFERENCES `articulos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `password_resets`
 --
 
@@ -275,41 +108,6 @@ CREATE TABLE `password_resets` (
   PRIMARY KEY (`user_id`),
   CONSTRAINT `password_resets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuarios_registrados` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `publicidad`
---
-
-DROP TABLE IF EXISTS `publicidad`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `publicidad` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `anunciante` varchar(50) NOT NULL,
-  `banner` varchar(255) NOT NULL,
-  `campana` text DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `suscripciones`
---
-
-DROP TABLE IF EXISTS `suscripciones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `suscripciones` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `usuario_id` int(11) NOT NULL,
-  `categoria_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_suscripcion_usuario` (`usuario_id`),
-  KEY `fk_suscripcion_categoria` (`categoria_id`),
-  CONSTRAINT `fk_suscripcion_categoria` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_suscripcion_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios_registrados` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -349,7 +147,7 @@ CREATE TABLE `usuarios_registrados` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_nombre_usuario` (`nombre_usuario`),
   UNIQUE KEY `unique_correo_electronico` (`correo_electronico`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -370,7 +168,7 @@ CREATE TABLE `valoraciones_articulos` (
   KEY `fk_valoracion_usuario` (`usuario_id`),
   CONSTRAINT `fk_valoracion_articulo` FOREIGN KEY (`articulo_id`) REFERENCES `articulos` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_valoracion_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios_registrados` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -403,4 +201,4 @@ CREATE TABLE `valoraciones_comentarios` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-05 19:16:18
+-- Dump completed on 2024-08-05 20:53:44
