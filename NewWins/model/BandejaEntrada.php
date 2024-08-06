@@ -1,19 +1,31 @@
 <?php
 // Archivo: model/BandejaEntradaModel.php
 
-// Definición de la clase BandejaEntradaModel
+/**
+ * Clase que gestiona las operaciones relacionadas con los artículos en la bandeja de entrada.
+ */
 class BandejaEntradaModel
 {
-    // Propiedad para almacenar la conexión a la base de datos
+    /**
+     * @var mysqli $conn Conexión a la base de datos.
+     */
     private $conn;
 
-    // Constructor que inicializa la conexión a la base de datos
+    /**
+     * Constructor que inicializa la conexión a la base de datos.
+     *
+     * @param mysqli $conn Conexión a la base de datos.
+     */
     public function __construct($conn)
     {
         $this->conn = $conn;
     }
 
-    // Método para obtener todos los artículos de la bandeja de entrada
+    /**
+     * Obtiene todos los artículos de la bandeja de entrada junto con los nombres de usuario asociados.
+     *
+     * @return array Un array asociativo que contiene los artículos de la bandeja de entrada.
+     */
     public function obtenerArticulos()
     {
         // Consulta SQL para obtener los artículos y los nombres de usuario asociados
@@ -39,7 +51,13 @@ class BandejaEntradaModel
         return $articulos;
     }
 
-    // Método para obtener un artículo específico por su ID
+    /**
+     * Obtiene un artículo específico de la bandeja de entrada por su ID.
+     *
+     * @param int $id ID del artículo que se desea obtener.
+     * 
+     * @return array|null Un array asociativo con los datos del artículo si se encuentra, o null si no se encuentra.
+     */
     public function obtenerArticuloPorId($id)
     {
         // Consulta SQL para obtener un artículo por su ID

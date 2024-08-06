@@ -18,58 +18,79 @@ class GestorContenido
     }
 
     // Método para subir una noticia a la base de datos
-    public function subirNoticia($titulo, $contenido, $url, $categoria_id)
-    {
-        // Crea un objeto DateTime con la zona horaria de Bogotá
-        $fecha = new DateTime('now', new DateTimeZone('America/Bogota'));
-        // Formatea la fecha y hora para que se ajuste al formato de la base de datos
-        $fecha_publicacion = $fecha->format('Y-m-d H:i:s');
+    /**
+ * Método para subir una nueva noticia a la base de datos.
+ *
+ * @param string $titulo El título de la noticia.
+ * @param string $contenido El contenido de la noticia.
+ * @param string $url La URL de la noticia.
+ * @param int $categoria_id El ID de la categoría a la que pertenece la noticia.
+ * 
+ * @return bool Devuelve true si la inserción fue exitosa, de lo contrario false.
+ */
+public function subirNoticia($titulo, $contenido, $url, $categoria_id)
+{
+    // Crea un objeto DateTime con la zona horaria de Bogotá
+    $fecha = new DateTime('now', new DateTimeZone('America/Bogota'));
+    // Formatea la fecha y hora para que se ajuste al formato de la base de datos
+    $fecha_publicacion = $fecha->format('Y-m-d H:i:s');
 
-        // Verifica que todos los parámetros necesarios no estén vacíos
-        if (!empty($titulo) && !empty($contenido) && !empty($url) && !empty($categoria_id)) {
-            // Consulta SQL para insertar una nueva noticia en la tabla 'articulos'
-            $sql = "INSERT INTO articulos (titulo, fecha_publicacion, contenido, url, categoria_id) VALUES (?, ?, ?, ?, ?)";
-            // Preparar la consulta SQL
-            $stmt = $this->conn->prepare($sql);
-            // Vincular los parámetros a la consulta preparada
-            $stmt->bind_param("ssssi", $titulo, $fecha_publicacion, $contenido, $url, $categoria_id);
+    // Verifica que todos los parámetros necesarios no estén vacíos
+    if (!empty($titulo) && !empty($contenido) && !empty($url) && !empty($categoria_id)) {
+        // Consulta SQL para insertar una nueva noticia en la tabla 'articulos'
+        $sql = "INSERT INTO articulos (titulo, fecha_publicacion, contenido, url, categoria_id) VALUES (?, ?, ?, ?, ?)";
+        // Preparar la consulta SQL
+        $stmt = $this->conn->prepare($sql);
+        // Vincular los parámetros a la consulta preparada
+        $stmt->bind_param("ssssi", $titulo, $fecha_publicacion, $contenido, $url, $categoria_id);
 
-            // Ejecutar la consulta y verificar si la inserción fue exitosa
-            if ($stmt->execute()) {
-                return true; // Devolver true si la inserción fue exitosa
-            } else {
-                return false; // Devolver false si hubo un error en la inserción
-            }
-        } else {
-            return false; // Devolver false si faltan datos
-        }
+        // Ejecutar la consulta y verificar si la inserción fue exitosa
+        return $stmt->execute();
+    } else {
+        return false; // Devolver false si faltan datos
     }
+}
 
-    // Método para listar todas las categorías de la base de datos
-    public function listarCategorias()
-    {
-        // Consulta SQL para seleccionar todas las categorías
-        $sql = "SELECT * FROM categorias";
-        // Ejecutar la consulta SQL
-        $result = $this->conn->query($sql);
-        // Devolver el resultado de la consulta
-        return $result;
-    }
+/**
+ * Método para listar todas las categorías de la base de datos.
+ *
+ * @return mysqli_result Devuelve el resultado de la consulta.
+ */
+public function listarCategorias()
+{
+    // Consulta SQL para seleccionar todas las categorías
+    $sql = "SELECT * FROM categorias";
+    // Ejecutar la consulta SQL
+    $result = $this->conn->query($sql);
+    // Devolver el resultado de la consulta
+    return $result;
+}
 
-    // Método para listar todas las noticias de la base de datos
-    public function listarNoticias()
-    {
-        // Consulta SQL para seleccionar noticias y sus categorías
-        $sql = "SELECT a.id, c.nombre AS categoria, a.titulo, a.contenido, a.url, a.fecha_publicacion
+/**
+ * Método para listar todas las noticias de la base de datos.
+ *
+ * @return mysqli_result Devuelve el resultado de la consulta.
+ */
+public function listarNoticias()
+{
+    // Consulta SQL para seleccionar noticias y sus categorías
+    $sql = "SELECT a.id, c.nombre AS categoria, a.titulo, a.contenido, a.url, a.fecha_publicacion
             FROM articulos a
             JOIN categorias c ON a.categoria_id = c.id";
-        // Ejecutar la consulta SQL
-        $result = $this->conn->query($sql);
-        // Devolver el resultado de la consulta
-        return $result;
-    }
+    // Ejecutar la consulta SQL
+    $result = $this->conn->query($sql);
+    // Devolver el resultado de la consulta
+    return $result;
+}
 
-    public function eliminarNoticia($id)
+/**
+ * Método para eliminar una noticia de la base de datos por su ID.
+ *
+ * @param int $id El ID de la noticia a eliminar.
+ * 
+ * @return bool Devuelve true si la eliminación fue exitosa, de lo contrario false.
+ */
+public function eliminarNoticia($id)
 {
     // Consulta SQL para eliminar una noticia por su ID
     $sql = "DELETE FROM articulos WHERE id = ?";
@@ -79,13 +100,16 @@ class GestorContenido
     $stmt->bind_param("i", $id);
 
     // Ejecutar la consulta y verificar si la eliminación fue exitosa
-    if ($stmt->execute()) {
-        return true; // Devolver true si la eliminación fue exitosa
-    } else {
-        return false; // Devolver false si hubo un error en la eliminación
-    }
+    return $stmt->execute();
 }
 
+/**
+ * Método para eliminar una categoría y sus artículos relacionados de la base de datos.
+ *
+ * @param int $id El ID de la categoría a eliminar.
+ * 
+ * @return bool Devuelve true si la eliminación fue exitosa, de lo contrario false.
+ */
 public function eliminarCategoria($id)
 {
     // Iniciar una transacción para asegurar la integridad de los datos
@@ -114,6 +138,15 @@ public function eliminarCategoria($id)
     }
 }
 
+/**
+ * Método para crear una nueva categoría en la base de datos.
+ *
+ * @param string $nombre El nombre de la categoría.
+ * @param string $descripcion La descripción de la categoría.
+ * @param string $imagen La URL de la imagen de la categoría.
+ * 
+ * @return bool Devuelve true si la inserción fue exitosa, de lo contrario false.
+ */
 public function crearCategoria($nombre, $descripcion, $imagen)
 {
     // Verificar que el nombre y la descripción no estén vacíos
@@ -124,16 +157,22 @@ public function crearCategoria($nombre, $descripcion, $imagen)
         $stmt->bind_param("sss", $nombre, $descripcion, $imagen);
 
         // Ejecutar la consulta y verificar si la inserción fue exitosa
-        if ($stmt->execute()) {
-            return true; // Devolver true si la inserción fue exitosa
-        } else {
-            return false; // Devolver false si hubo un error en la inserción
-        }
+        return $stmt->execute();
     } else {
         return false; // Devolver false si faltan datos
     }
 }
-
+/**
+ * Método para editar una noticia existente en la base de datos.
+ *
+ * @param int $id El ID de la noticia a editar.
+ * @param string $titulo El nuevo título de la noticia.
+ * @param string $contenido El nuevo contenido de la noticia.
+ * @param string $url La nueva URL de la noticia.
+ * @param int $categoria_id El nuevo ID de la categoría de la noticia.
+ * 
+ * @return bool Devuelve true si la actualización fue exitosa, de lo contrario false.
+ */
 public function editarNoticia($id, $titulo, $contenido, $url, $categoria_id)
 {
     // Consulta SQL para actualizar una noticia existente en la base de datos
@@ -144,13 +183,17 @@ public function editarNoticia($id, $titulo, $contenido, $url, $categoria_id)
     $stmt->bind_param("sssii", $titulo, $contenido, $url, $categoria_id, $id);
 
     // Ejecutar la consulta y verificar si la actualización fue exitosa
-    if ($stmt->execute()) {
-        return true; // Devolver true si la actualización fue exitosa
-    } else {
-        return false; // Devolver false si hubo un error en la actualización
-    }
+    return $stmt->execute();
 }
 
+/**
+ * Método para obtener una categoría por su ID.
+ *
+ * @param int $id El ID de la categoría a obtener.
+ * 
+ * @return array|null Devuelve un array con los datos de la categoría si se encontró, de lo contrario null.
+ * @throws RuntimeException Si ocurre un error en la consulta o si no se encuentra la categoría.
+ */
 public function obtenerCategoriaPorId($id)
 {
     // Consulta SQL para obtener una categoría por su ID
@@ -173,6 +216,13 @@ public function obtenerCategoriaPorId($id)
     return $result->fetch_assoc();
 }
 
+/**
+ * Método para obtener una noticia por su ID.
+ *
+ * @param int $id El ID de la noticia a obtener.
+ * 
+ * @return array|null Devuelve un array con los datos de la noticia si se encontró, de lo contrario null.
+ */
 public function obtenerNoticiaPorId($id)
 {
     // Consulta SQL para obtener una noticia por su ID
@@ -185,6 +235,14 @@ public function obtenerNoticiaPorId($id)
     return $resultado->fetch_assoc();
 }
 
+/**
+ * Método para listar noticias con paginación.
+ *
+ * @param int $limite El número de noticias a mostrar por página.
+ * @param int $offset El desplazamiento desde el inicio de las noticias.
+ * 
+ * @return mysqli_result Devuelve el resultado de la consulta.
+ */
 public function listarNoticiasConPaginacion($limite, $offset)
 {
     // Consulta SQL para listar noticias con paginación
@@ -201,11 +259,21 @@ public function listarNoticiasConPaginacion($limite, $offset)
     return $stmt->get_result();
 }
 
+
+/**
+ * Método para buscar noticias basadas en un término de búsqueda.
+ *
+ * @param string $termino Término de búsqueda proporcionado por el usuario.
+ * 
+ * @return array Devuelve un array de noticias que coinciden con el término de búsqueda.
+ */
 public function buscarNoticias($termino)
 {
     // Dividir el término de búsqueda en palabras individuales
     $terminos = explode(' ', $termino);
+    // Iniciar la consulta SQL con la base de la consulta
     $sql = "SELECT * FROM articulos WHERE ";
+    // Inicializar arrays para los parámetros y tipos
     $params = [];
     $types = '';
     
@@ -215,8 +283,10 @@ public function buscarNoticias($termino)
             $sql .= " OR ";
         }
         $sql .= "(titulo LIKE ? OR contenido LIKE ?)";
+        // Agregar los parámetros con comodines '%' para búsqueda parcial
         $params[] = "%" . $palabra . "%";
         $params[] = "%" . $palabra . "%";
+        // Agregar el tipo de parámetro 'ss' para cada par de parámetros de tipo string
         $types .= 'ss';
     }
 
@@ -224,6 +294,7 @@ public function buscarNoticias($termino)
     $stmt = $this->conn->prepare($sql);
     // Vincular los parámetros de búsqueda a la consulta preparada
     $stmt->bind_param($types, ...$params);
+    // Ejecutar la consulta
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -236,6 +307,13 @@ public function buscarNoticias($termino)
     return $noticias;
 }
 
+/**
+ * Método para listar artículos de una categoría específica.
+ *
+ * @param int $categoria_id ID de la categoría.
+ * 
+ * @return array Devuelve un array de artículos que pertenecen a la categoría especificada.
+ */
 public function listarArticulosPorCategoria($categoria_id)
 {
     // Consulta SQL para obtener todos los artículos de una categoría específica
@@ -244,6 +322,7 @@ public function listarArticulosPorCategoria($categoria_id)
     $stmt = $this->conn->prepare($sql);
     // Vincular el parámetro de ID de categoría a la consulta preparada
     $stmt->bind_param("i", $categoria_id);
+    // Ejecutar la consulta
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -257,7 +336,16 @@ public function listarArticulosPorCategoria($categoria_id)
     return $articulos;
 }
 
-// Método para agregar un comentario a un artículo
+/**
+ * Método para agregar un comentario a un artículo.
+ *
+ * @param string $usuario Nombre del usuario que hace el comentario.
+ * @param string $texto Texto del comentario.
+ * @param int $puntuacion Puntuación dada por el usuario.
+ * @param int $articulo_id ID del artículo al que se agrega el comentario.
+ * 
+ * @throws Exception Si ocurre un error al agregar el comentario.
+ */
 public function agregarComentario($usuario, $texto, $puntuacion, $articulo_id)
 {
     // Consulta SQL para insertar un nuevo comentario
@@ -275,7 +363,13 @@ public function agregarComentario($usuario, $texto, $puntuacion, $articulo_id)
     $stmt->close();
 }
 
-// Método para obtener todos los comentarios de un artículo específico
+/**
+ * Método para obtener todos los comentarios de un artículo específico.
+ *
+ * @param int $articulo_id ID del artículo.
+ * 
+ * @return array Devuelve un array de comentarios que pertenecen al artículo especificado.
+ */
 public function obtenerComentariosPorArticuloId($articulo_id)
 {
     // Consulta SQL para seleccionar los comentarios de un artículo ordenados por fecha
@@ -299,7 +393,17 @@ public function obtenerComentariosPorArticuloId($articulo_id)
     return $comentarios;
 }
 
-// Método para enviar una noticia a la bandeja de entrada
+/**
+ * Método para enviar una noticia a la bandeja de entrada.
+ *
+ * @param int $usuario_id ID del usuario que envía la noticia.
+ * @param string $titulo Título de la noticia.
+ * @param string $contenido Contenido de la noticia.
+ * @param int $categoria_id ID de la categoría de la noticia.
+ * @param string $url URL de la noticia.
+ * 
+ * @return bool Devuelve true si la noticia se envió correctamente, false en caso contrario.
+ */
 public function enviarNoticia($usuario_id, $titulo, $contenido, $categoria_id, $url)
 {
     // Consulta SQL para insertar una noticia en la bandeja de entrada
@@ -321,7 +425,17 @@ public function enviarNoticia($usuario_id, $titulo, $contenido, $categoria_id, $
         return false;
     }
 }
-    
+
+/**
+ * Método para publicar una noticia.
+ *
+ * @param int $id ID de la noticia en la bandeja de entrada.
+ * @param string $titulo Título de la noticia.
+ * @param string $contenido Contenido de la noticia.
+ * @param int $categoria_id ID de la categoría de la noticia.
+ * 
+ * @return bool Devuelve true si la noticia se publicó correctamente, false en caso contrario.
+ */
 public function publicarNoticia($id, $titulo, $contenido, $categoria_id)
 {
     try {
@@ -352,6 +466,13 @@ public function publicarNoticia($id, $titulo, $contenido, $categoria_id)
     }
 }
 
+/**
+ * Método para eliminar una noticia de la bandeja de entrada.
+ *
+ * @param int $id ID de la noticia en la bandeja de entrada.
+ * 
+ * @return bool Devuelve true si la noticia se eliminó correctamente, false en caso contrario.
+ */
 public function eliminarNoticiaBandeja($id)
 {
     // Consulta SQL para eliminar una noticia de la bandeja de entrada
@@ -364,6 +485,11 @@ public function eliminarNoticiaBandeja($id)
     return $stmt->execute();
 }
 
+/**
+ * Método para listar todas las noticias de la bandeja de entrada.
+ *
+ * @return array Devuelve un array de noticias con los nombres de usuario.
+ */
 public function listarNoticiasBandeja()
 {
     // Consulta SQL para obtener todas las noticias de la bandeja de entrada con los nombres de usuario
@@ -374,7 +500,15 @@ public function listarNoticiasBandeja()
     // Obtener todos los resultados como un array asociativo
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
+/**
+ * Método para agregar una valoración a un artículo.
+ *
+ * @param int $articulo_id ID del artículo.
+ * @param int $usuario_id ID del usuario que valora el artículo.
+ * @param string $valoracion Valoración del usuario ('like' o 'dislike').
+ * 
+ * @return bool Devuelve true si la valoración se insertó o actualizó correctamente, false en caso contrario.
+ */
 public function agregarValoracion($articulo_id, $usuario_id, $valoracion)
 {
     // Verificar si ya existe una valoración del artículo por el usuario
@@ -394,6 +528,14 @@ public function agregarValoracion($articulo_id, $usuario_id, $valoracion)
     }
 }
 
+/**
+ * Método para obtener una valoración existente de un artículo por un usuario.
+ *
+ * @param int $articulo_id ID del artículo.
+ * @param int $usuario_id ID del usuario.
+ * 
+ * @return string|null Devuelve la valoración si existe, null en caso contrario.
+ */
 public function obtenerValoracionExistente($articulo_id, $usuario_id)
 {
     // Consulta SQL para verificar si existe una valoración del artículo por el usuario
@@ -414,6 +556,15 @@ public function obtenerValoracionExistente($articulo_id, $usuario_id)
     }
 }
 
+/**
+ * Método para actualizar una valoración existente de un artículo por un usuario.
+ *
+ * @param int $articulo_id ID del artículo.
+ * @param int $usuario_id ID del usuario.
+ * @param string $valoracion Nueva valoración del usuario ('like' o 'dislike').
+ * 
+ * @return bool Devuelve true si la valoración se actualizó correctamente, false en caso contrario.
+ */
 public function actualizarValoracion($articulo_id, $usuario_id, $valoracion)
 {
     // Consulta SQL para actualizar la valoración de un artículo por un usuario
@@ -425,6 +576,13 @@ public function actualizarValoracion($articulo_id, $usuario_id, $valoracion)
     return $stmt->execute();
 }
 
+/**
+ * Método para obtener el conteo de valoraciones de un artículo.
+ *
+ * @param int $articuloId ID del artículo.
+ * 
+ * @return array Devuelve un array asociativo con el conteo de 'likes' y 'dislikes'.
+ */
 public function obtenerConteoValoraciones($articuloId)
 {
     // Consulta SQL para contar los 'likes' y 'dislikes' para un artículo
@@ -443,7 +601,17 @@ public function obtenerConteoValoraciones($articuloId)
     $stmt->close();
     return $conteo;
 }
-
+/**
+ * Método para subir una noticia desde la bandeja de entrada a la tabla de artículos.
+ *
+ * @param int $id ID del artículo en la bandeja de entrada.
+ * @param string $titulo Título del artículo.
+ * @param string $contenido Contenido del artículo.
+ * @param string $url URL del artículo.
+ * @param int $categoria_id ID de la categoría del artículo.
+ * 
+ * @return bool Devuelve true si la operación fue exitosa, false en caso contrario.
+ */
 public function subirNoticiaBandeja($id, $titulo, $contenido, $url, $categoria_id)
 {
     // Obtener los detalles del artículo desde la bandeja de entrada
@@ -478,6 +646,13 @@ public function subirNoticiaBandeja($id, $titulo, $contenido, $url, $categoria_i
     return $exito;
 }
 
+/**
+ * Método para eliminar un artículo de la bandeja de entrada.
+ *
+ * @param int $id ID del artículo en la bandeja de entrada.
+ * 
+ * @return bool Devuelve true si la operación fue exitosa, false en caso contrario.
+ */
 public function eliminarDeBandeja($id)
 {
     // Consulta SQL para eliminar un artículo de la bandeja de entrada
@@ -490,6 +665,11 @@ public function eliminarDeBandeja($id)
     return $stmt->execute();
 }
 
+/**
+ * Método para obtener las noticias más populares basadas en el número de 'likes'.
+ *
+ * @return array Devuelve un array de las noticias más populares.
+ */
 public function obtenerNoticiasTendencia()
 {
     // Consulta SQL para obtener las noticias más populares basadas en el número de 'likes'
@@ -519,6 +699,14 @@ public function obtenerNoticiasTendencia()
     }
 }
 
+/**
+ * Método para obtener estadísticas basadas en una fecha proporcionada.
+ *
+ * @param string $fecha Fecha en formato 'YYYY-MM-DD'.
+ * 
+ * @return array Devuelve un array asociativo con las estadísticas.
+ * @throws Exception Si hay un error en la preparación de la consulta.
+ */
 public function obtenerEstadisticasPorFecha($fecha)
 {
     // Asegúrate de escapar la fecha para evitar inyecciones SQL
@@ -556,6 +744,16 @@ public function obtenerEstadisticasPorFecha($fecha)
 
     return $estadisticas;
 }
+
+/**
+ * Método para obtener estadísticas basadas en un rango de fechas proporcionado.
+ *
+ * @param string $fechaInicio Fecha de inicio en formato 'YYYY-MM-DD'.
+ * @param string $fechaFin Fecha de fin en formato 'YYYY-MM-DD'.
+ * 
+ * @return array Devuelve un array asociativo con las estadísticas.
+ * @throws Exception Si hay un error en la preparación de la consulta.
+ */
 public function obtenerEstadisticasPorRangoFechas($fechaInicio, $fechaFin) {
     // Asegúrate de escapar las fechas para evitar inyecciones SQL
     $fechaInicio = $this->conn->real_escape_string($fechaInicio);
@@ -593,6 +791,7 @@ public function obtenerEstadisticasPorRangoFechas($fechaInicio, $fechaFin) {
 
     return $estadisticas;
 }
+
 
 }
     

@@ -1,7 +1,13 @@
 <?php
 // Definición de la clase ConexionBD
 class ConexionBD {
-    // Método estático para obtener una conexión a la base de datos
+    /**
+     * Método estático para obtener una conexión a la base de datos.
+     *
+     * @return mysqli Devuelve un objeto de conexión a la base de datos.
+     *
+     * @throws Exception Si no se puede conectar a la base de datos, se detiene la ejecución y muestra un mensaje de error.
+     */
     public static function obtenerConexion() {
         // Datos de la conexión a la base de datos
         $servername = '127.0.0.1'; // Dirección del servidor de la base de datos
