@@ -1,0 +1,20 @@
+.truncate-content {
+    max-width: 200px; /* Ajusta el ancho máximo según tus necesidades */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.table img {
+    max-width: 100px; /* Ajusta el ancho máximo según tus necesidades */
+    max-height: 100px; /* Ajusta la altura máxima según tus necesidades */
+}
+.contenido-articulo {
+    max-width: 300px; /* Ajusta el ancho máximo según tus necesidades */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.img-thumbnail {
+    max-width: 150px;
+    max-height: 150px;
+}
