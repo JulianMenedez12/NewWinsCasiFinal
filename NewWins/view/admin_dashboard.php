@@ -14,9 +14,9 @@ session_start();
     <script>
         tinymce.init({
             selector: 'textarea#contenido',
-            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            plugins: 'advlist media autolink lists link image charmap print preview hr anchor pagebreak',
             toolbar_mode: 'floating',
-            toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            toolbar: 'media | undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
             image_class_list: [
                 { title: 'None', value: '' },
                 { title: 'Responsive', value: 'img-fluid' }
