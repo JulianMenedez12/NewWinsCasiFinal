@@ -5,7 +5,7 @@ Abre tu navegador y ve al repositorio de GitHub: https://github.com/JulianMenede
 Haz clic en el botón "Code" y selecciona "Download ZIP".
 Extrae el archivo ZIP en tu máquina local.
 2. Colocar el Sitio en Localhost
-Copia la carpeta extraída NewWinsCasiFinal y pégala en el directorio htdocs de tu servidor local (XAMPP, MAMP, etc.).
+Copia la carpeta extraída NewWinsCasiFinal y pégala en el directorio htdocs de tu servidor local cambiando el nombre de la carpeta a NewWins(XAMPP, MAMP, etc.).
 3. Configurar el Entorno de Desarrollo
 Inicia tu servidor local (XAMPP, MAMP, etc.).
 Abre tu navegador y ve a http://localhost/NewWinsCasiFinal-main/index.php
