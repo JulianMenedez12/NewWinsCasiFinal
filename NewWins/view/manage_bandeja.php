@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bootstrap-4/bootstrap-4.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/alert1.js"></script>
+    <link rel="stylesheet" href="../css/bandeja.css">
 </head>
 <body>
     <div class="container my-5">
@@ -43,13 +44,13 @@
                                 <td><?= date("Y-m-d H:i:s", strtotime($articulo["fecha_envio"])) ?></td>
                                 <td>
                                     <?php if (!empty($articulo["url"])) : ?>
-                                        <img src="<?= htmlspecialchars($articulo["url"]) ?>" alt="Imagen" width="100">
+                                        <img src="<?= htmlspecialchars($articulo["url"]) ?>" alt="Imagen">
                                     <?php else : ?>
                                         No hay imagen
                                     <?php endif; ?>
                                 </td>
                                 <td><?= htmlspecialchars($articulo["titulo"]) ?></td>
-                                <td><?= htmlspecialchars($articulo["contenido"]) ?></td>
+                                <td class="truncate-content"><?= htmlspecialchars($articulo["contenido"]) ?></td>
                                 <td>
                                     <form action="../controller/procesar_noticia.php" method="post" style="display:inline;">
                                         <input type="hidden" name="id" value="<?= $articulo['id'] ?>">

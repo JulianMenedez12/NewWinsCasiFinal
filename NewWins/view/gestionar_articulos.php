@@ -12,13 +12,13 @@ include 'header.php';
 ?>
 <head>
     <title>Gestión de Artículos</title>
+    <link rel="stylesheet" href="../css/bandeja.css">
 </head>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            
             <div id="noticias" class="mt-4">
-                <h4>Articulos Generales</h4>
+                <h4>Artículos Generales</h4>
                 <div class="mt-4">
                     <div class="row">
                         <?php
@@ -38,15 +38,20 @@ include 'header.php';
                             echo '<tbody>';
 
                             while ($row = $result->fetch_assoc()) {
+                                $contenidoTruncado = htmlspecialchars($row["contenido"]);
+                                if (strlen($contenidoTruncado) > 100) { // Ajusta el número de caracteres según tus necesidades
+                                    $contenidoTruncado = substr($contenidoTruncado, 0, 100) . '...'; // Trunca el contenido y agrega '...'
+                                }
+
                                 echo '<tr>';
                                 echo '<td>' . htmlspecialchars($row["id"]) . '</td>';
                                 echo '<td>' . htmlspecialchars($row["categoria"]) . '</td>';
                                 echo '<td>' . htmlspecialchars($row["titulo"]) . '</td>';
-                                echo '<td>' . htmlspecialchars($row["contenido"]) . '</td>';
+                                echo '<td class="contenido-articulo">' . $contenidoTruncado . '</td>';
 
                                 // Mostrar la imagen si la URL no está vacía
                                 if (!empty($row["url"])) {
-                                    echo '<td><img src="' . htmlspecialchars($row["url"]) . '" class="img-thumbnail" style="max-width: 150px; max-height: 150px;"></td>';
+                                    echo '<td><img src="' . htmlspecialchars($row["url"]) . '" class="img-thumbnail"></td>';
                                 } else {
                                     echo '<td>No hay imagen disponible</td>';
                                 }
@@ -162,12 +167,15 @@ include 'header.php';
                     });
                 }
                 document.addEventListener('DOMContentLoaded', function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        const status = urlParams.get('status');
-        if (status === 'success') {
-            mostrarAlertaExito('Noticia editada correctamente.');
-        } else if (status === 'error') {
-            mostrarAlertaError('Error al editar la noticia.');
-        }
-    });
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const status = urlParams.get('status');
+                    if (status === 'success') {
+                        mostrarAlertaExito('Noticia editada correctamente.');
+                    } else if (status === 'error') {
+                        mostrarAlertaError('Error al editar la noticia.');
+                    }
+                });
             </script>
+        </div>
+    </div>
+</div>
