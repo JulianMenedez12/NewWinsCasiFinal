@@ -34,7 +34,7 @@ if (!$noticia) {
     <title><?php echo $noticia['titulo']; ?> - NEWWINS</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css"> <!-- Agrega tu archivo CSS personalizado aquí -->
-
+    <link rel="stylesheet" href="../css/bandeja.css">
     <!-- Incluye Day.js desde un CDN -->
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/relativeTime.js"></script>
@@ -148,18 +148,16 @@ crossorigin="anonymous"></script>
                 Comentarios
             </button>
         </h2>
-        <div class="collapse" id="collapseComentarios">
+        <div class="collapse collapseComentarios" id="collapseComentarios">
             <?php if (!empty($comentarios)) : ?>
                 <?php foreach ($comentarios as $comentario) : ?>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-2">
-                                <img src="<?php echo htmlspecialchars($comentario['foto_perfil']); ?>" alt="Avatar" class="rounded-circle me-2" width="40" height="40">
-                                <strong><?php echo htmlspecialchars($comentario['nombre_usuario']); ?></strong>
-                                <span class="fecha-comentario ms-2 text-muted" data-fecha="<?php echo htmlspecialchars($comentario['fecha_hora']); ?>"></span>
-                            </div>
-                            <p><?php echo htmlspecialchars($comentario['texto']); ?></p>
+                    <div class="comentario-card">
+                        <div class="d-flex align-items-center mb-2">
+                            <img src="<?php echo htmlspecialchars($comentario['foto_perfil']); ?>" alt="Avatar" class="rounded-circle me-2" width="30" height="30"> <!-- Tamaño del avatar reducido -->
+                            <strong><?php echo htmlspecialchars($comentario['nombre_usuario']); ?></strong>
+                            <span class="fecha-comentario ms-2 text-muted" data-fecha="<?php echo htmlspecialchars($comentario['fecha_hora']); ?>"></span>
                         </div>
+                        <p class="comentario-texto"><?php echo htmlspecialchars($comentario['texto']); ?></p>
                     </div>
                 <?php endforeach; ?>
             <?php else : ?>
