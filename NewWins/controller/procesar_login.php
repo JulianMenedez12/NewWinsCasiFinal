@@ -23,9 +23,9 @@ try {
      * @return void
      */
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (isset($_POST["emailadmin"]) && isset($_POST["passwordadmin"]) && isset($_POST["cf-turnstile-response"])) {
-            $correo = $_POST["emailadmin"]; // Obtener el correo electrónico del administrador
-            $contrasena = $_POST["passwordadmin"]; // Obtener la contraseña del administrador
+        if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["cf-turnstile-response"])) {
+            $correo = $_POST["email"]; // Obtener el correo electrónico del administrador
+            $contrasena = $_POST["password"]; // Obtener la contraseña del administrador
             $captchaResponse = $_POST['cf-turnstile-response']; // Obtener la respuesta del captcha
             $secretKey = '0x4AAAAAAAgIXj4GJJHN_Va3IBD_6Jyf-vM'; // Clave secreta del captcha (debe ser reemplazada por la clave secreta real)
 
@@ -71,7 +71,7 @@ try {
                 // Crear una instancia del gestor de usuarios con la conexión
                 $gestorUsuarios = new GestorUsuarios($conexion);
                 // Intentar iniciar sesión del administrador con las credenciales proporcionadas
-                $exito = $gestorUsuarios->iniciarSesionAdmin($correo, $contrasena);
+                $exito = $gestorUsuarios->iniciarSesion($correo, $contrasena);
 
                 if ($exito) {
                     // Si el inicio de sesión es exitoso, guardar el correo en la sesión y reiniciar el contador de intentos fallidos
