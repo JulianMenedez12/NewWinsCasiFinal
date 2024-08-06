@@ -63,13 +63,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->isSMTP();
             $mail->Host       = 'smtp.mailersend.net'; // Servidor SMTP
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'MS_YYa6TN@trial-0p7kx4xn637g9yjr.mlsender.net'; // Usuario SMTP
-            $mail->Password   = 'iMSpvncMOY4Q4K3X'; // Contraseña SMTP
+            $mail->Username   = 'MS_nsZuj6@trial-ynrw7gy89qn42k8e.mlsender.net'; // Usuario SMTP
+            $mail->Password   = 'hJPtKVGkhvMJBjSm'; // Contraseña SMTP
             $mail->SMTPSecure = 'tls'; // Habilitar cifrado TLS
             $mail->Port       = 587; // Puerto SMTP
             
             // Remitente
-            $mail->setFrom('MS_YYa6TN@trial-0p7kx4xn637g9yjr.mlsender.net', 'Newwins');
+            $mail->setFrom('MS_nsZuj6@trial-ynrw7gy89qn42k8e.mlsender.net', 'Newwins');
             
             // Destinatario
             $mail->addAddress($email);
