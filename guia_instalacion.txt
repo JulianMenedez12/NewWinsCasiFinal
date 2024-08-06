@@ -1,0 +1,21 @@
+
+Guía de Instalación para NewWins
+1. Descargar el Repositorio
+Abre tu navegador y ve al repositorio de GitHub: https://github.com/JulianMenedez12/NewWinsCasiFinal/new/main
+Haz clic en el botón "Code" y selecciona "Download ZIP".
+Extrae el archivo ZIP en tu máquina local.
+2. Colocar el Sitio en Localhost
+Copia la carpeta extraída NewWinsCasiFinal y pégala en el directorio htdocs de tu servidor local (XAMPP, MAMP, etc.).
+3. Configurar el Entorno de Desarrollo
+Inicia tu servidor local (XAMPP, MAMP, etc.).
+Abre tu navegador y ve a http://localhost/NewWinsCasiFinal-main/index.php
+Serás redirigido a un formulario de configuración.
+4. Configuración Automática de la Base de Datos
+Completa el formulario de configuración ingresando los detalles del host, usuario, contraseña, y nombre de la base de datos que deseas usar.
+El instalador creará la base de datos y configurará el archivo de conexión automáticamente.
+5. Acceder al Sitio
+Una vez completada la instalación, seras redireccionado al sitio en http://localhost/NewWinsCasiFinal/NewWins/.
+6. Inicia sesión con las credenciales de administrador por defecto:
+Email: admin@gmail.com
+Contraseña: contraseña
+Esta guía te ayudará a configurar el sitio web NewWins en tu entorno local. Si tienes alguna pregunta o encuentras algún problema durante la instalación, no dudes en consultarme.
