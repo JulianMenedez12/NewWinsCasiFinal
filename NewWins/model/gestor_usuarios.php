@@ -47,6 +47,7 @@ class GestorUsuarios
             return ['success' => false, 'message' => 'Usuario no encontrado.']; // Usuario no encontrado
         }
     }
+    
 
     /**
      * Inicia sesión de un administrador con correo y contraseña.
