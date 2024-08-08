@@ -64,33 +64,20 @@ $fechaActual = date("d/m/Y"); // Formato de fecha: día/mes/año
         dayjs.extend(window.dayjs_plugin_relativeTime);
         dayjs.locale('es');
     </script>
-    <style>
-        /* Estilo para hacer el header fijo en la parte superior */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        /* Añadir un margen superior a la página para que el contenido no quede oculto detrás del header fijo */
-        body {
-            padding-top: 70px; /* Ajusta este valor según la altura del header */
-        }
-
-        .topbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 999;
-            background-color: #f8f9fa;
-        }
-
-        .container-fluid {
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-    </style>
+         <script>
+        tinymce.init({
+            selector: 'textarea#contenido',
+            plugins: 'advlist media autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar_mode: 'floating',
+            toolbar: 'media | undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            image_class_list: [
+                { title: 'None', value: '' },
+                { title: 'Responsive', value: 'img-fluid' }
+            ],
+            content_style: 'img { max-width: 100%; height: auto; }'
+        });
+    </script>
+    
 </head>
 
 <body>
