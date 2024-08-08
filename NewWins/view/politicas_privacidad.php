@@ -53,8 +53,7 @@
             <h2 class="section-title">6. Cambios en la Política de Privacidad</h2>
             <p>Podemos actualizar esta Política de Privacidad ocasionalmente. Te notificaremos sobre cambios significativos mediante la publicación de la nueva política en nuestro sitio web. Te recomendamos que revises esta política periódicamente para estar informado sobre cómo protegemos tu información.</p>
             
-            <h2 class="section-title">7. Contacto</h2>
-            <p>Si tienes alguna pregunta o inquietud sobre nuestra Política de Privacidad, no dudes en <a href="contactarnos.php" class="footer-link">contactarnos</a> a través de nuestro formulario de contacto o utilizando la información de contacto proporcionada en nuestro sitio web.</p>
+
         </div>
         <div class="text-center mt-5">
             <a href="terminos_y_condiciones.php" class="btn btn-danger">Volver a los Términos y Condiciones </a>

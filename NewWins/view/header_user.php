@@ -45,12 +45,15 @@ $fechaActual = date("d/m/Y"); // Formato de fecha: día/mes/año
     <link rel="stylesheet" href="../css/owlcarousel/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="../css/style.css"> <!-- Agrega tu archivo CSS personalizado aquí -->
     <link rel="stylesheet" href="../css/styless.css">
+    <link rel="stylesheet" href="../css/bandeja.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8262837766739470"
      crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/relativeTime.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/locale/es.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8262837766739470"
+    crossorigin="anonymous"></script>
     <script>
         // Configura el plugin de tiempo relativo y el idioma español
         dayjs.extend(window.dayjs_plugin_relativeTime);

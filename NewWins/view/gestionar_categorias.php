@@ -10,15 +10,6 @@ if (!isset($_SESSION['correo'])) {
 
 include 'header.php';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Gestión de categorías</title>
-    <link rel="icon" href="../img/logo.png" type="image/png">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../js/alert.js"></script>
-</head>
 <body>
 <div class="container-fluid">
     <div class="row">

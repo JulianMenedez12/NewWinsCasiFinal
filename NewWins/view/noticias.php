@@ -13,10 +13,6 @@ require_once '../model/gestor_usuarios.php';
 $gestorUsuarios = new GestorUsuarios();
 $usuarios = $gestorUsuarios->listarUsuarios();
 ?>
-<head>
-    <title>Gestión de usuarios</title>
-    <link rel="icon" href="../img/logo.png" type="image/png">
-</head>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">

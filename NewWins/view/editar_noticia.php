@@ -8,32 +8,6 @@ $model = new BandejaEntradaModel($conn);
 
 $articulo = $model->obtenerArticuloPorId($_GET['id']);
 ?>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Noticia</title>
-    <link rel="icon" href="../img/logo.png" type="image/png">
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="https://cdn.tiny.cloud/1/fj76e7aualveq77f2n0uc7mcz6cdimvxob2lx0yl9o4rwkhp/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="js/alert.js"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea#contenido',
-            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-            toolbar_mode: 'floating',
-            toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-            image_class_list: [
-                { title: 'None', value: '' },
-                { title: 'Responsive', value: 'img-fluid' }
-            ],
-            content_style: 'img { max-width: 100%; height: auto; }'
-        });
-    </script>
-</head>
 <body>
     <div class="container my-5">
         <h4 class="mb-4">Editar Noticia</h4>

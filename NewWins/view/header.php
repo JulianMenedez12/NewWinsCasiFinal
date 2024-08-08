@@ -26,16 +26,31 @@ if (!isset($_SESSION['correo'])) {
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>NewWins Admin</title>
     <link rel="icon" href="../img/logo.png" type="image/png">
-
+    
     <!-- Enlaces a Bootstrap y otros CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../css/styles.css">
-
+    <link rel="stylesheet" href="../css/bandeja.css">
     <!-- Script de SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.tiny.cloud/1/fj76e7aualveq77f2n0uc7mcz6cdimvxob2lx0yl9o4rwkhp/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#contenido',
+            plugins: 'advlist media autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar_mode: 'floating',
+            toolbar: 'media | undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            image_class_list: [
+                { title: 'None', value: '' },
+                { title: 'Responsive', value: 'img-fluid' }
+            ],
+            content_style: 'img { max-width: 100%; height: auto; }'
+        });
+    </script>
+        
 </head>
 
 <body>

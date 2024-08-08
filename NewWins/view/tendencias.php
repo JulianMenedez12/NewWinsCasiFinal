@@ -8,21 +8,7 @@ unset($_SESSION['noticiasTendencia']); // Limpiar datos después de usarlos
 // Verificar si hay un mensaje de error en la URL
 $error = isset($_GET['error']) ? $_GET['error'] : '';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noticias en Tendencia</title>
-    <link rel="icon" href="../img/logo.png" type="image/png">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css"> <!-- Agrega tu archivo CSS personalizado aquí -->
 
-    <!-- Incluye Day.js desde un CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/relativeTime.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/locale/es.js"></script>
-</head>
 <body>
     <!-- Tendencias Start -->
     <div class="container mt-4">

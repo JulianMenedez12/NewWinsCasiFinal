@@ -1,6 +1,4 @@
-<html>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</html>
+
 <?php
 // Incluir los archivos necesarios
 require_once '../model/conexion.php';
@@ -81,7 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restablecer Contraseña</title>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>

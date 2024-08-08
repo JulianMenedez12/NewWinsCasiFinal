@@ -46,8 +46,7 @@
                     <h2 class="section-title">Legislación Aplicable</h2>
                     <p>Estos términos y condiciones se regirán e interpretarán de acuerdo con las leyes de Colombia. Cualquier disputa que surja en relación con estos términos será resuelta por los tribunales competentes de Colombia.</p>
 
-                    <h2 class="section-title">Contacto</h2>
-                    <p>Si tienes alguna pregunta o inquietud sobre estos términos y condiciones, por favor, <a href="contactarnos.php" class="footer-link">contáctanos</a> a través de nuestro formulario de contacto o mediante los datos de contacto proporcionados en nuestro sitio web.</p>
+                
                 </div>
             </div>
         </div>

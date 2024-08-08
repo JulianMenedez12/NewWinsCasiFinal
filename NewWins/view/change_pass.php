@@ -1,4 +1,4 @@
-<title>Seguridad</title>
+
 <?php
 include('header.php')
 ?>

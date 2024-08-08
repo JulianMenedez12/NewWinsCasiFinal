@@ -1,21 +1,5 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noticias</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css"> <!-- Agrega tu archivo CSS personalizado aquí -->
-    <link rel="icon" href="../img/logo.png" type="image/png">
-
-    <!-- Incluye Day.js desde un CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/relativeTime.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/locale/es.js"></script>
-</head>
+<?php include('header_user.php'); ?>
 <body>
-    <?php include('header_user.php'); ?>
-
     <!-- Main Content Start -->
     <div class="container mt-4">
         <h2 class="mb-4">Noticias</h2>

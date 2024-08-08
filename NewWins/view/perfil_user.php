@@ -5,23 +5,6 @@ $userEmail = $_SESSION['correo'];
 $user = GestorUsuarios::getUserByEmail($userEmail);
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
-    <link rel="icon" href="../img/logo.png" type="image/png">
-    <link rel="stylesheet" href="../css/styless.css">
-    
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="../js/alert.js"></script>
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    
-</head>
-
 <body>
     <div class="container-xl px-4 mt-4">
         <nav class="nav nav-borders">

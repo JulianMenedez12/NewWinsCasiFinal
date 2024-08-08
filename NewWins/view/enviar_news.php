@@ -1,30 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enviar Noticia</title>
-    <link rel="icon" href="../img/logo.png" type="image/png">
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="https://cdn.tiny.cloud/1/fj76e7aualveq77f2n0uc7mcz6cdimvxob2lx0yl9o4rwkhp/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea#contenido',
-            plugins: 'advlist media autolink lists link image charmap print preview hr anchor pagebreak',
-            toolbar_mode: 'floating',
-            toolbar: 'media | undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-            image_class_list: [
-                { title: 'None', value: '' },
-                { title: 'Responsive', value: 'img-fluid' }
-            ],
-            content_style: 'img { max-width: 100%; height: auto; }'
-        });
-    </script>
-</head>
+<?php include 'header_user.php'; ?> <!-- Incluir el encabezado común -->
 
 <body>
-    <?php include 'header_user.php'; ?> <!-- Incluir el encabezado común -->
+    
 
     <div class="container">
     <div class="row justify-content-center">

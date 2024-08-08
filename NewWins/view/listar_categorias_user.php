@@ -30,25 +30,7 @@ if ($categoria_id > 0) {
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NEWWINS</title>
-    <link rel="icon" href="../img/logo.png" type="image/png">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/owlcarousel/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="../css/style.css"> <!-- Agrega tu archivo CSS personalizado aquí -->
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/relativeTime.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/locale/es.js"></script>
-    <script>
-        // Configura el plugin de tiempo relativo y el idioma español
-        dayjs.extend(window.dayjs_plugin_relativeTime);
-        dayjs.locale('es');
-    </script>
-</head>
+
 
 <body>
 <?php include('header_user.php'); ?>

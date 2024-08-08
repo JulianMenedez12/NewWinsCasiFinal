@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seguridad</title>
-    <link rel="icon" href="../img/logo.png" type="image/png">
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-</head>
+<?php include('header_user.php'); ?>
 <body>
-    <?php include('header_user.php'); ?>
-
     <div class="container-xl px-4 mt-4">
         <nav class="nav nav-borders">
             <a class="nav-link ms-0" href="perfil_user.php">Perfil</a>
