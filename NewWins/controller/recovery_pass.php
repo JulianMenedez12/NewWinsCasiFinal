@@ -1,5 +1,11 @@
 <html>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+    .swal-title, .swal2-html-container {
+        font-family: "Roboto", sans-serif !important;
+    }
+</style>
 </html>
 <?php
 // Incluir los archivos de PHPMailer
@@ -26,7 +32,7 @@ if ($conn->connect_error) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email']; // Dirección de correo electrónico enviada por POST
-    
+
     /**
      * Verifica si el correo existe en la base de datos.
      *
@@ -39,52 +45,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("s", $email); // Vincula el parámetro de la consulta
     $stmt->execute(); // Ejecuta la consulta
     $stmt->store_result(); // Almacena el resultado
-    
+
     if ($stmt->num_rows > 0) { // Si el correo existe en la base de datos
         $stmt->bind_result($user_id); // Obtiene el ID del usuario
         $stmt->fetch();
-        
+
         // Generar un token único para la recuperación de contraseña
         $token = bin2hex(random_bytes(50)); // Token generado de forma segura
         $expire_date = date("Y-m-d H:i:s", strtotime('+1 hour')); // Fecha de expiración del token
-        
+
         // Guardar el token en la base de datos
         $sql = "INSERT INTO password_resets (user_id, token, expire_date) VALUES (?, ?, ?)
                 ON DUPLICATE KEY UPDATE token = VALUES(token), expire_date = VALUES(expire_date)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("iss", $user_id, $token, $expire_date); // Vincula los parámetros de la consulta
         $stmt->execute(); // Ejecuta la consulta
-        
+
         // Enviar el correo de recuperación de contraseña
         $mail = new PHPMailer(true);
-        
+
         try {
             // Configuración del servidor SMTP
             $mail->isSMTP();
             $mail->Host       = 'smtp.mailersend.net'; // Servidor SMTP
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'MS_nsZuj6@trial-ynrw7gy89qn42k8e.mlsender.net'; // Usuario SMTP
-            $mail->Password   = 'hJPtKVGkhvMJBjSm'; // Contraseña SMTP
+            $mail->Username   = 'MS_7Az64S@trial-ynrw7gy8jk242k8e.mlsender.net'; // Usuario SMTP
+            $mail->Password   = '1xUEdHJwF8fzXxwv'; // Contraseña SMTP
             $mail->SMTPSecure = 'tls'; // Habilitar cifrado TLS
             $mail->Port       = 587; // Puerto SMTP
-            
+
             // Remitente
-            $mail->setFrom('MS_nsZuj6@trial-ynrw7gy89qn42k8e.mlsender.net', 'Newwins');
-            
+            $mail->setFrom('MS_7Az64S@trial-ynrw7gy8jk242k8e.mlsender.net', 'Newwins');
+
             // Destinatario
             $mail->addAddress($email);
-            
+
             // Contenido del correo
             $mail->isHTML(true);
             $mail->Subject = 'Restablecimiento de contraseña';
             $mail->Body    = "Haz clic en el siguiente enlace para restablecer tu contrasena de NewWins: <a href='http://localhost/newwins/NewWins/view/reset_pass.php?token=$token'>Restablecer contraseña</a>";
             $mail->AltBody = "Haz clic en el siguiente enlace para restablecer tu contrasena de NewWins: http://localhost/newwins/NewWins/view/reset_pass.php?token=$token";
-            
+
             $mail->send();
             echo '<script>
-                Swal.fire("Éxito", "El correo de recuperación ha sido enviado", "success")
-                .then(() => { window.location.href = "../view/index.php"; });
-            </script>';
+    Swal.fire({
+        title: "Éxito",
+        text: "El correo de recuperación ha sido enviado",
+        icon: "success",
+        customClass: {
+            title: "swal-title",
+            htmlContainer: "swal2-html-container"
+        }
+    }).then(() => {
+        window.location.href = "../view/index.php";
+    });
+</script>';
         } catch (Exception $e) {
             echo '<script>Swal.fire("Error", "El mensaje no pudo ser enviado. Error: ' . $mail->ErrorInfo . '", "error");</script>';
         }
