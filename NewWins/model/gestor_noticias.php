@@ -753,6 +753,7 @@ public function obtenerEstadisticasPorRangoFechas($fechaInicio, $fechaFin) {
         SELECT
             (SELECT COUNT(*) FROM articulos WHERE DATE(fecha_publicacion) BETWEEN ? AND ?) AS total_articulos,
             (SELECT COUNT(*) FROM valoraciones_articulos WHERE DATE(fecha_hora) BETWEEN ? AND ?) AS total_valoraciones,
+            (SELECT COUNT(*) FROM comentarios WHERE DATE(fecha_hora) BETWEEN ? AND ?) AS total_comentarios,
             (SELECT COUNT(*) FROM valoraciones_articulos WHERE valoracion = 'like' AND DATE(fecha_hora) BETWEEN ? AND ?) AS total_likes,
             (SELECT COUNT(*) FROM valoraciones_articulos WHERE valoracion = 'dislike' AND DATE(fecha_hora) BETWEEN ? AND ?) AS total_dislikes,
             (SELECT COUNT(*) FROM usuarios_registrados WHERE DATE(fecha_registro) BETWEEN ? AND ?) AS total_usuarios,
@@ -766,7 +767,7 @@ public function obtenerEstadisticasPorRangoFechas($fechaInicio, $fechaFin) {
     }
 
     // Vincula los parámetros
-    $stmt->bind_param('ssssssssssss', $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin);
+    $stmt->bind_param('ssssssssssss', $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin);
 
     // Ejecuta la consulta
     $stmt->execute();
