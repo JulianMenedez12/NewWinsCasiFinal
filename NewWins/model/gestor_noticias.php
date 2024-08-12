@@ -744,43 +744,37 @@ public function obtenerEstadisticasPorFecha($fecha)
  * @throws Exception Si hay un error en la preparación de la consulta.
  */
 public function obtenerEstadisticasPorRangoFechas($fechaInicio, $fechaFin) {
-    // Asegúrate de escapar las fechas para evitar inyecciones SQL
     $fechaInicio = $this->conn->real_escape_string($fechaInicio);
     $fechaFin = $this->conn->real_escape_string($fechaFin);
     
-    // Consulta SQL para obtener estadísticas basadas en el rango de fechas proporcionado
     $query = "
         SELECT
             (SELECT COUNT(*) FROM articulos WHERE DATE(fecha_publicacion) BETWEEN ? AND ?) AS total_articulos,
             (SELECT COUNT(*) FROM valoraciones_articulos WHERE DATE(fecha_hora) BETWEEN ? AND ?) AS total_valoraciones,
-            (SELECT COUNT(*) FROM comentarios WHERE DATE(fecha_hora) BETWEEN ? AND ?) AS total_comentarios,
             (SELECT COUNT(*) FROM valoraciones_articulos WHERE valoracion = 'like' AND DATE(fecha_hora) BETWEEN ? AND ?) AS total_likes,
             (SELECT COUNT(*) FROM valoraciones_articulos WHERE valoracion = 'dislike' AND DATE(fecha_hora) BETWEEN ? AND ?) AS total_dislikes,
             (SELECT COUNT(*) FROM usuarios_registrados WHERE DATE(fecha_registro) BETWEEN ? AND ?) AS total_usuarios,
-            (SELECT COUNT(*) FROM bandeja_entrada WHERE DATE(fecha_envio) BETWEEN ? AND ?) AS total_articulos_bandeja
+            (SELECT COUNT(*) FROM bandeja_entrada WHERE DATE(fecha_envio) BETWEEN ? AND ?) AS total_articulos_bandeja,
+            (SELECT COUNT(*) FROM comentarios WHERE DATE(fecha_hora) BETWEEN ? AND ?) AS total_comentarios
     ";
 
-    // Prepara la declaración
     $stmt = $this->conn->prepare($query);
     if (!$stmt) {
         throw new Exception('Error en la preparación de la consulta: ' . $this->conn->error);
     }
 
-    // Vincula los parámetros
-    $stmt->bind_param('ssssssssssss', $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin);
+    $stmt->bind_param('ssssssssssssss', $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin);
 
-    // Ejecuta la consulta
     $stmt->execute();
 
-    // Obtén el resultado
     $result = $stmt->get_result();
     $estadisticas = $result->fetch_assoc();
 
-    // Cierra la declaración
     $stmt->close();
 
     return $estadisticas;
 }
+
 
 
 }
